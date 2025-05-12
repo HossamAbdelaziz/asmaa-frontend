@@ -26,7 +26,9 @@ export default function AdminBookings() {
     const fetchBookings = async () => {
         setLoading(true);
         const snap = await getDocs(collection(db, "booking"));
-        const allBookings = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        const allBookings = snap.docs
+            .map(doc => ({ id: doc.id, ...doc.data() }))
+            .filter(booking => booking.selectedDateTime);
 
         const enriched = await Promise.all(
             allBookings.map(async booking => {
@@ -169,9 +171,10 @@ export default function AdminBookings() {
                         </thead>
                         <tbody>
                             {filtered.map(booking => {
-                                const userTime = moment(booking.selectedDateTime)
-                                    .tz(booking.userTimeZone)
-                                    .format("dddd, MMM D YYYY - h:mm A");
+                                const userTime = booking.selectedDateTime
+                                    ? moment(booking.selectedDateTime).tz(booking.userTimeZone || "America/Toronto").format("dddd, MMM D YYYY - h:mm A")
+                                    : "N/A";
+
                                 const coachTime = moment(booking.selectedDateTime)
                                     .tz("America/Toronto")
                                     .format("dddd, MMM D YYYY - h:mm A");
