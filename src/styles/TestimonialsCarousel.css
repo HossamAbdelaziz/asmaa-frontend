@@ -1,0 +1,108 @@
+/* TestimonialsCarousel.css */
+
+.testimonials-carousel-container {
+    padding: 60px 20px;
+    max-width: 1200px;
+    margin: auto;
+    text-align: center;
+}
+
+.carousel-title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #2a2a2a;
+    margin-bottom: 40px;
+    font-family: "Poppins", sans-serif;
+}
+
+.testimonial-slide {
+    position: relative;
+    padding: 20px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+    border-radius: 16px;
+    background-color: #fff;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.testimonial-media-wrapper {
+    width: 100%;
+    height: 400px;
+    max-height: 70vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.testimonial-img,
+.testimonial-video {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: 12px;
+    transition: transform 0.3s ease;
+}
+
+.testimonial-img:hover {
+    transform: scale(1.03);
+}
+
+.testimonial-flag {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 30px;
+    height: 20px;
+    border-radius: 4px;
+    object-fit: cover;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+}
+
+.testimonial-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.75);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.testimonial-modal img {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 10px;
+    box-shadow: 0 0 20px #000;
+}
+
+.slick-dots {
+    bottom: -35px;
+}
+
+.slick-prev,
+.slick-next {
+    z-index: 1;
+}
+
+@media (max-width: 768px) {
+    .testimonial-media-wrapper {
+        height: 300px;
+    }
+
+    .testimonial-slide {
+        padding: 16px;
+    }
+
+    .testimonial-flag {
+        width: 26px;
+        height: 18px;
+    }
+}

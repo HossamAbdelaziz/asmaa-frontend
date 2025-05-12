@@ -1,0 +1,355 @@
+/* 🌟 Base Container */
+.program-detail {
+    background-color: var(--bg-page);
+    color: var(--text-primary);
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* 🧠 Title */
+.detail-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+}
+
+/* ✨ Tagline (special font) */
+.detail-tagline {
+    font-size: 1.2rem;
+    font-family: 'Caveat', cursive;
+    /* Change to any special font */
+    color: var(--accent);
+    margin-bottom: 1rem;
+}
+
+/* 📖 Description */
+.detail-description {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--text-subtle);
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+/* 🖼 Hero Image */
+.detail-image {
+    width: 100%;
+    max-height: 380px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+/* 📋 Highlight Headings */
+.highlight-heading {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    color: var(--text-primary);
+}
+
+/* ✔ Highlight List */
+.highlight-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+.highlight-item {
+    margin-bottom: 0.5rem;
+    padding-left: 1.4rem;
+    position: relative;
+    font-size: 1rem;
+    color: var(--text-subtle);
+}
+
+.highlight-item::before {
+    content: '✔';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+}
+
+/* 🎯 Expected Results */
+.expected-results {
+    text-align: center;
+    padding: 2rem 1rem;
+    background-color: var(--bg-surface);
+    border-radius: 12px;
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* 📱 Responsive Fixes */
+@media (max-width: 768px) {
+    .detail-title {
+        font-size: 1.6rem;
+    }
+
+    .detail-tagline {
+        font-size: 1.1rem;
+    }
+
+    .detail-description {
+        text-align: center;
+    }
+}
+
+/* 🌍 RTL Support */
+html[lang="ar"] .detail-description,
+html[lang="ar"] .highlight-item,
+html[lang="ar"] .highlight-heading {
+    text-align: right;
+    direction: rtl;
+    padding-right: 1.4rem;
+    padding-left: 0;
+}
+
+html[lang="ar"] .highlight-item::before {
+    left: auto;
+    right: 0;
+}
+
+html[lang="ar"] .expected-results {
+    text-align: right;
+    direction: rtl;
+}
+
+/* 🖱️ CTA Button */
+.btn-accent {
+    background-color: var(--accent);
+    color: #fff !important;
+    border-radius: 10px;
+    font-weight: 600;
+    padding: 0.6rem 1.6rem;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.btn-accent:hover {
+    background-color: #a17c43;
+    /* darker accent */
+    color: #fff;
+}
+
+
+/* 🔲 Container for Offers + Audience */
+.program-section-row {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 3rem;
+}
+
+/* 🟫 Each Box */
+.program-box {
+    flex: 1 1 300px;
+    background-color: var(--bg-surface);
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    /* soft 3D */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.program-box:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+}
+
+/* 📝 Heading inside box */
+.program-box h4 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+
+/* ✔ Each Point */
+.program-box .highlight-item {
+    font-size: 1rem;
+    color: var(--text-subtle);
+    line-height: 1.7;
+    padding-left: 1.5rem;
+    position: relative;
+    margin-bottom: 0.6rem;
+}
+
+.program-box .highlight-item::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: bold;
+}
+
+/* 🌍 RTL Fix */
+html[lang="ar"] .program-box .highlight-item {
+    padding-left: 0;
+    padding-right: 1.5rem;
+    text-align: right;
+}
+
+html[lang="ar"] .program-box .highlight-item::before {
+    left: auto;
+    right: 0;
+}
+
+
+
+
+/* ✅ Special Styling for Expected Results */
+.expected-box {
+    background-color: #edf6f3;
+    /* soft green-blue */
+    border: 2px dashed var(--accent);
+    padding: 2rem;
+    border-radius: 20px;
+    margin-top: 2rem;
+    transition: box-shadow 0.3s ease;
+    margin-bottom: 1rem;
+}
+
+.expected-box:hover {
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.08);
+}
+
+/* RTL tweaks */
+html[lang="ar"] .expected-box .highlight-item {
+    text-align: right;
+    padding-right: 1.5rem;
+    padding-left: 0;
+}
+
+html[lang="ar"] .expected-box .highlight-item::before {
+    right: 0;
+    left: auto;
+}
+
+
+
+
+
+
+
+
+.investment-wrapper {
+    background-color: var(--bg-surface);
+    padding: 40px 20px;
+    border-radius: 18px;
+    text-align: center;
+    margin-top: 60px;
+}
+
+.investment-box {
+    background: white;
+    padding: 36px;
+    border-radius: 14px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+}
+
+.investment-heading {
+    font-size: 1.5rem;
+    font-family: var(--font-heading);
+    font-weight: bold;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+}
+
+.badge-popular {
+    background-color: var(--accent);
+    color: white;
+    font-size: 0.75rem;
+    padding: 4px 8px;
+    border-radius: 8px;
+    margin-left: 10px;
+}
+
+.investment-price {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 24px;
+}
+
+.btn-accent-gradient {
+    background: linear-gradient(to right, var(--accent), #b78a4b);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 24px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    min-width: 240px;
+}
+
+.btn-accent-gradient:hover {
+    background: linear-gradient(to right, #b78a4b, var(--accent));
+    color: white;
+}
+
+.btn-whatsapp {
+    background-color: #25d366;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 24px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    min-width: 240px;
+}
+
+.btn-whatsapp:hover {
+    background-color: #1ebc5b;
+    color: white;
+}
+
+
+
+@media (max-width: 768px) {
+    .investment-buttons {
+        flex-direction: column !important;
+        align-items: stretch !important;
+    }
+
+    .investment-buttons>* {
+        width: 100%;
+    }
+
+    .subscribed-message {
+        text-align: center;
+    }
+}
+
+.subscribed-banner {
+    background-color: #fffaf5;
+    border: 2px solid #e1d2b8;
+    border-radius: 10px;
+    padding: 16px 20px;
+    min-width: 260px;
+    max-width: 360px;
+    font-size: 0.95rem;
+    color: #4b3b2e;
+    line-height: 1.5;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+}
+
+.subscribed-text {
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: #3c2c1a;
+}
+
+.subscribed-note {
+    font-size: 0.85rem;
+    color: #877c6b;
+}
+
+.login-hint {
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    opacity: 0.85;
+}
+
+.investment-buttons .btn {
+    min-width: 260px;
+}

@@ -1,0 +1,172 @@
+/* 🌐 Base layout */
+.programs-page {
+    margin-top: -1rem;
+    background-color: var(--bg-page);
+    color: var(--text-primary);
+    font-family: 'Segoe UI', 'Tahoma', sans-serif;
+    padding-top: 2rem;
+    padding-bottom: 3rem;
+}
+
+/* 🧠 Section Title */
+.programs-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 2rem;
+}
+
+/* 🧱 Program Card */
+.program-card {
+    background-color: #fff;
+    border-radius: 12px;
+    border: none;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+
+    border-top: 5px solid var(--accent);
+}
+
+.program-card:hover {
+    transform: translateY(-15px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+/* 🖼 Image */
+.program-img {
+    width: 100%;
+    height: 230px;
+    object-fit: cover;
+}
+
+/* 📚 Text Content */
+.card-body {
+    padding: 1.5rem;
+}
+
+.program-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
+}
+
+.program-description {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--text-subtle);
+}
+
+/* 🌍 Responsive Design */
+@media (max-width: 768px) {
+    .programs-title {
+        font-size: 1.6rem;
+    }
+
+    .program-img {
+        height: 180px;
+    }
+
+    .program-description {
+        font-size: 0.95rem;
+    }
+}
+
+/* ✨ Arabic RTL Styling for Card Content */
+html[lang="ar"] .program-title,
+html[lang="ar"] .program-description {
+    direction: rtl;
+    text-align: right;
+}
+
+/* 🌟 Read More Button */
+.btn-outline-accent {
+    border: 2px solid var(--accent);
+    color: var(--accent);
+    font-weight: 600;
+    border-radius: 10px;
+    padding: 0.4rem 1.4rem;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-accent:hover {
+    background-color: var(--accent);
+    color: #fff;
+}
+
+/* === 🧠 Coach Intro Section === */
+
+/* 💬 Wrapper around the text block */
+.programs-intro-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+}
+
+/* ✏️ Arabic RTL alignment for wrapper */
+html[lang="ar"] .programs-intro-wrapper {
+    justify-content: flex-end;
+}
+
+/* ✅ Coach Image Styling */
+.intro-img {
+    max-width: 70%;
+    border-radius: 12px;
+    object-fit: cover;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+}
+
+/* ✅ Text Styling */
+.programs-intro-text {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--text-primary);
+    max-width: 600px;
+    text-align: left;
+}
+
+/* 🌍 RTL Support */
+html[lang="ar"] .programs-intro-text {
+    direction: rtl;
+    text-align: right;
+}
+
+/* 📱 Mobile Fix: Center Text */
+@media (max-width: 768px) {
+    .programs-intro-wrapper {
+        justify-content: center;
+    }
+
+    .programs-intro-text {
+        text-align: center !important;
+    }
+
+    html[lang="ar"] .programs-intro-text {
+        text-align: center;
+    }
+
+
+}
+
+.program-duration-badge {
+    display: inline-block;
+    background-color: var(--bg-surface);
+    color: var(--text-primary);
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.35rem 0.75rem;
+    border-radius: 999px;
+    margin-bottom: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+html[lang="ar"] .program-duration-badge {
+    direction: rtl;
+    text-align: right;
+}

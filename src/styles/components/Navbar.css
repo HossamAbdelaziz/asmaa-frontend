@@ -1,0 +1,444 @@
+/* =======================
+   MAIN NAVBAR STYLES
+========================== */
+
+.main-navbar {
+    background-color: var(--bg-header-footer);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+
+    /* ↑ NEW vertical sizing ↑ */
+    height: auto !important;
+    /* makes the bar taller */
+    padding: 10px 30px;
+    /* 0 top/bottom, 50px left/right */
+
+    /* flex centering */
+    display: flex;
+    align-items: center !important;
+    justify-content: center;
+}
+
+
+.navbar-container {
+    height: 100%;
+    /* fills whatever height .main-navbar ends up */
+    max-width: 1400px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Brand (Logo + Name) */
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.brand img {
+    height: 80px;
+    /* was 80px—shrinking it centers it better */
+    transition: transform 0.4s ease;
+    /* adjust timing as you like */
+
+
+}
+
+.brand img:hover {
+    transform: scale(1.1) rotate(5deg);
+    /* slight grow + tilt */
+}
+
+@keyframes logoBounce {
+    0% {
+        transform: scale(1) rotate(0);
+    }
+
+    30% {
+        transform: scale(1.15) rotate(5deg);
+    }
+
+    60% {
+        transform: scale(0.95) rotate(-3deg);
+    }
+
+    100% {
+        transform: scale(1) rotate(0);
+    }
+}
+
+.brand span {
+    font-size: 1.2rem;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+/* ================================
+   Nav Links (Center with Underline)
+=================================== */
+.navbar-links {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    font-family: var(--font-body);
+}
+
+.navbar-links a {
+    position: relative;
+    text-decoration: none;
+    color: var(--text-primary);
+    font-weight: 400;
+    padding-bottom: 4px;
+    transition: color 0.3s ease;
+}
+
+.navbar-links a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 2px;
+    width: 100%;
+    background-color: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+}
+
+.navbar-links a:hover::after {
+    transform: scaleX(1);
+}
+
+.navbar-links a:hover {
+    color: var(--accent);
+}
+
+/* ================================
+     Auth Buttons (Login & Signup Match)
+  =================================== */
+.auth-buttons {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.btn-login,
+.btn-signup {
+    background-color: var(--accent);
+    color: #fff;
+    padding: 8px 20px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 999px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    min-width: 100px;
+    transition: background-color 0.2s ease;
+    font-family: var(--font-body);
+}
+
+.btn-login:hover,
+.btn-signup:hover {
+    background-color: var(--accent-dark);
+    color: #fff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* =======================
+     LANGUAGE TOGGLE
+  ========================== */
+.language-toggle {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
+
+.lang-icon {
+    font-size: 0.85rem;
+    padding: 4px 8px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    cursor: pointer;
+    background: transparent;
+    font-family: var(--font-body);
+}
+
+.lang-icon:hover {
+    background: var(--accent);
+    color: #fff;
+}
+
+/* =======================
+     USER DROPDOWN (Desktop)
+  ========================== */
+.user-dropdown {
+    position: relative;
+}
+
+.user-dropdown .btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: none;
+    border: none;
+    font-weight: 500;
+    cursor: pointer;
+    color: var(--text-primary);
+    font-family: var(--font-body);
+}
+
+.user-dropdown img {
+    width: 60px !important;
+    height: 60px !important;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.user-dropdown .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    min-width: 160px;
+    padding: 0.5rem 0;
+    z-index: 999;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.2s ease-in-out;
+}
+
+.user-dropdown .dropdown-item {
+    padding: 8px 16px;
+    font-size: 0.95rem;
+    color: var(--text-primary);
+    background: transparent;
+    border: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    font-family: var(--font-body);
+}
+
+.user-dropdown .dropdown-item:hover {
+    background-color: #f7f7f7;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* =======================
+     HAMBURGER (MOBILE)
+=========================== */
+.hamburger-btn {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* =======================
+     MOBILE DRAWER STYLES
+=========================== */
+.mobile-drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 280px;
+    height: 100dvh;
+    background-color: var(--bg-header-footer);
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1500;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    animation: slideIn 0.3s ease-in-out;
+    overflow-y: auto;
+    font-family: var(--font-body);
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
+
+/* ===== Drawer Header ===== */
+.drawer-header {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+}
+
+.btn-close {
+    font-size: 24px;
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    cursor: pointer;
+}
+
+/* ===== Avatar Section ===== */
+.drawer-user {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.drawer-avatar {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--accent);
+}
+
+.drawer-name {
+    font-weight: 600;
+    font-size: 1.15rem;
+    color: var(--text-primary);
+    margin-top: 10px;
+    font-family: var(--font-body);
+}
+
+/* ===== Drawer Links ===== */
+.drawer-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.drawer-link {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 0;
+    transition: color 0.2s ease;
+    font-family: var(--font-body);
+}
+
+.drawer-link:hover {
+    color: var(--accent);
+}
+
+/* ===== Language Section ===== */
+.language-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    font-family: var(--font-body);
+}
+
+.language-toggle .lang-icon {
+    font-size: 0.85rem;
+    padding: 4px 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    cursor: pointer;
+    background: transparent;
+}
+
+.language-toggle .lang-icon:hover {
+    background: var(--accent);
+    color: #fff;
+}
+
+/* ===== Logout Button (Authenticated Only) ===== */
+.drawer-body .btn-danger {
+    background-color: var(--danger);
+    color: #fff;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 999px;
+    margin-top: 12px;
+    font-family: var(--font-body);
+}
+
+/* =======================
+     RESPONSIVE BREAKPOINT
+=========================== */
+@media (max-width: 768px) {
+
+    .navbar-links,
+    .auth-buttons {
+        display: none;
+    }
+
+    .hamburger-btn {
+        display: block;
+    }
+}
+
+
+
+/* ───── MOBILE NAVBAR LAYOUT ───── */
+@media (max-width: 768px) {
+
+    /* 1) Make nav flex children: the .navbar-container shrinks to content, and the hamburger sits at the far end */
+    .main-navbar {
+        justify-content: space-between !important;
+        padding: 0 16px;
+        /* a bit of side-padding */
+    }
+
+    .navbar-container {
+        width: auto;
+        /* don’t fill 100%—shrink to brand width */
+        flex: 1;
+        /* but take up remaining space so brand stays left */
+        justify-content: flex-start;
+    }
+
+    /* 2) Show the hamburger, hide the desktop links/buttons */
+    .hamburger-btn {
+        display: block;
+    }
+
+    .navbar-links,
+    .auth-buttons {
+        display: none !important;
+    }
+
+    /* 3) Vertically center the logo/name inside the taller bar */
+    .main-navbar,
+    .navbar-container {
+        align-items: center;
+        min-height: 80px;
+        /* or whatever height you prefer */
+    }
+
+    .brand img {
+        height: 80px;
+        padding: 10px;
+        /* was 80px—shrinking it centers it better */
+
+    }
+}

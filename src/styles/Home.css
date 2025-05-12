@@ -1,0 +1,222 @@
+/* 🌐 General */
+body {
+    background-color: var(--bg-page);
+}
+
+/* 🏠 Home Page Container */
+.home-container {
+    padding-top: 40px;
+    padding-bottom: 80px;
+}
+
+/* 🦸 Hero Section */
+.home-container h1 {
+    color: var(--text-primary);
+    font-weight: 700;
+    font-size: 3rem;
+    font-family: var(--font-heading);
+    line-height: 1.4;
+}
+
+.home-container p {
+    color: var(--text-subtle);
+    font-size: 1.25rem;
+    line-height: 1.8;
+    font-family: var(--font-body);
+    word-spacing: 0.05em;
+    letter-spacing: 0;
+}
+
+/* Hero Image */
+.home-container img {
+    max-width: 60%;
+    height: auto;
+    border-radius: 10% !important;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* ✅ Hero Text Centering */
+.home-hero-text {
+    text-align: center;
+}
+
+.home-hero-text h1,
+.home-hero-text p {
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    display: block;
+}
+
+/* Adjust text direction based on language */
+body.lang-ar .home-hero-text h1,
+body.lang-ar .home-hero-text p {
+    direction: rtl;
+    text-align: center;
+}
+
+body.lang-en .home-hero-text h1,
+body.lang-en .home-hero-text p {
+    direction: ltr;
+    text-align: center;
+}
+
+.home-hero-text .button {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+/* 📱 Responsive Design */
+@media (max-width: 768px) {
+    .home-container h1 {
+        font-size: 2.2rem;
+    }
+
+    .home-container p {
+        font-size: 1.1rem;
+    }
+
+    .home-container {
+        padding-top: 0px;
+        padding-bottom: 30px;
+    }
+
+    .home-container .row {
+        gap: 15px;
+    }
+}
+
+/* ℹ️ Info Section */
+.home-info-section {
+    background-color: var(--bg-surface);
+    padding-top: 60px;
+    padding-bottom: 60px;
+}
+
+.home-info-section h2 {
+    color: var(--text-primary);
+    font-size: 2.2rem;
+    font-family: var(--font-heading);
+    line-height: 1.5;
+}
+
+.home-info-section p {
+    font-size: 1.2rem;
+    color: var(--text-subtle);
+    font-family: var(--font-body);
+    line-height: 1.8;
+    max-width: 800px;
+    margin: 0 auto;
+    word-spacing: 0.05em;
+}
+
+/* 🧭 RTL/LTR Utilities */
+.arabic-text,
+.text-rtl {
+    direction: rtl !important;
+    text-align: right !important;
+}
+
+.english-text,
+.text-ltr {
+    direction: ltr;
+    text-align: left;
+}
+
+/* 👩‍🏫 About Coach Section */
+.about-coach-section {
+    border-top: 1px solid #ddd;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.about-coach-section p {
+    font-size: 1.2rem;
+    line-height: 1.9;
+    font-family: var(--font-body);
+    color: var(--text-subtle);
+    word-spacing: 0.05em;
+}
+
+/* 🎯 Hero Button Group */
+.hero-button-group {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+}
+
+.hero-button-group .button {
+    background-color: var(--accent);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    font-family: var(--font-body);
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    text-align: center;
+    min-width: 160px;
+}
+
+.hero-button-group .button:hover {
+    background-color: #b58b45;
+    transform: scale(1.02);
+}
+
+/* 🧩 Global Button Fallback */
+.button {
+    background-color: var(--accent);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    font-family: var(--font-body);
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    text-align: center;
+    min-width: 160px;
+}
+
+.button:hover {
+    background-color: #b58b45;
+    transform: scale(1.02);
+}
+
+/* 🌍 RTL Fix: About Coach Section */
+body.lang-ar .about-coach-section .row {
+    flex-direction: row-reverse;
+}
+
+body.lang-ar .about-coach-section .col-md-6 {
+    text-align: right;
+    padding-left: 0 !important;
+    padding-right: 2rem !important;
+}
+
+body.lang-ar .about-coach-section h2 {
+    font-family: var(--font-arabic-heading);
+    font-weight: 600;
+    direction: rtl;
+    text-align: right !important;
+}
+
+body.lang-ar .about-coach-section p {
+    font-family: var(--font-arabic-body);
+    word-spacing: 0.05em;
+    line-height: 1.8;
+    direction: rtl;
+    text-align: right !important;
+}
+
+body.lang-ar .about-coach-section .button {
+    text-align: right !important;
+    direction: rtl !important;
+}
