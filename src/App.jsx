@@ -27,6 +27,7 @@ import Profile from "./pages/Profile";
 import UserDashboard from "./pages/UserDashboard";
 import TestimonialsPage from "./pages/TestimonialsPage";
 import ContactUsPage from "./pages/ContactUsPage";
+import { Analytics } from "@vercel/analytics/react";
 
 // Admin Pages
 import AdminDashboard from "./pages/admin/AdminDashboard";
@@ -88,7 +89,9 @@ function App() {
             </Route>
           </Routes>
         </Router>
+
       </AdminProvider>
+      <Analytics />
     </AuthProvider>
   );
 }
