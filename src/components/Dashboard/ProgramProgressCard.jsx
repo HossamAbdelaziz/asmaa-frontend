@@ -21,8 +21,8 @@ const ProgramProgressCard = ({ subscription, userData }) => {
         sessionsLeft = 0,
     } = subscription;
 
-    const avatarUrl = userData?.avatarUrl || avatarDefault;
-    const displayName = userData?.firstName || "User";
+    const avatarUrl = userData?.profile?.avatarUrl || avatarDefault;
+    const displayName = userData?.profile?.firstName || "User";
 
     // Dates
     const start = new Date(startDate);

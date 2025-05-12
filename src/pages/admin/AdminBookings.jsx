@@ -13,11 +13,15 @@ import axios from "axios";
 import moment from "moment-timezone";
 
 export default function AdminBookings() {
+    // existing state setup
     const [bookings, setBookings] = useState([]);
     const [statusFilter, setStatusFilter] = useState("all");
     const [searchTerm, setSearchTerm] = useState("");
     const [loading, setLoading] = useState(true);
     const [actionStatus, setActionStatus] = useState("");
+    const [rescheduleId, setRescheduleId] = useState(null);
+    const [newDate, setNewDate] = useState("");
+    const [newTime, setNewTime] = useState("");
 
     useEffect(() => {
         fetchBookings();
@@ -32,7 +36,6 @@ export default function AdminBookings() {
 
         const enriched = await Promise.all(
             allBookings.map(async booking => {
-                // 🧠 Log and handle missing userId
                 if (!booking.userId) {
                     console.warn("❗ Booking missing userId:", booking.id);
                     return {
@@ -59,7 +62,6 @@ export default function AdminBookings() {
                     const lastName = profile.lastName || "";
                     const email = profile.email || "";
 
-
                     return {
                         ...booking,
                         userName: `${firstName} ${lastName}`.trim() || "Unknown",
@@ -80,9 +82,6 @@ export default function AdminBookings() {
         setLoading(false);
     };
 
-
-
-
     const handleApprove = async (booking) => {
         setActionStatus("Processing approval...");
         const BACKEND_BASE_URL = "https://zoom-backend-5mf0.onrender.com";
@@ -91,12 +90,11 @@ export default function AdminBookings() {
             const res = await axios.post(`${BACKEND_BASE_URL}/api/zoom/create-meeting`, {
                 topic: booking.programTitle || "Coaching Session",
                 start_time: booking.selectedDateTime,
-                duration: 60, // default to 60 minutes, adjust if needed
+                duration: 60,
                 timezone: booking.timezone || "America/Toronto",
                 userEmail: booking.userEmail,
                 userName: booking.userName,
             });
-
 
             const zoomLink = res.data.zoomLink || "https://zoom.us/my/coachasmaa";
 
@@ -126,12 +124,31 @@ export default function AdminBookings() {
 
     const handleDelete = async (id) => {
         try {
-            await updateDoc(doc(db, "booking", id), { status: "deleted" }); // use status instead of hard delete
+            await updateDoc(doc(db, "booking", id), { status: "deleted" });
             setActionStatus("🗑️ Booking marked as deleted.");
             fetchBookings();
         } catch (err) {
             console.error(err);
             setActionStatus("❌ Failed to mark as deleted.");
+        }
+    };
+
+    const handleReschedule = async (id) => {
+        try {
+            const newDateTime = moment(`${newDate} ${newTime}`, "YYYY-MM-DD HH:mm").toISOString();
+            await updateDoc(doc(db, "booking", id), {
+                selectedDateTime: newDateTime,
+                status: "pending",
+                zoomLink: "",
+            });
+            setActionStatus("🔄 Booking rescheduled.");
+            setRescheduleId(null);
+            setNewDate("");
+            setNewTime("");
+            fetchBookings();
+        } catch (err) {
+            console.error(err);
+            setActionStatus("❌ Failed to reschedule booking.");
         }
     };
 
@@ -142,25 +159,18 @@ export default function AdminBookings() {
 
     const filtered = bookings.filter(b => {
         const matchesStatus = statusFilter === "all" || b.status === statusFilter;
-        const matchesSearch = [b.userName, b.userEmail]
-            .join(" ")
-            .toLowerCase()
-            .includes(searchTerm.toLowerCase());
+        const matchesSearch = [b.userName, b.userEmail].join(" ").toLowerCase().includes(searchTerm.toLowerCase());
         return matchesStatus && matchesSearch;
     });
 
     return (
         <div className="container mt-4">
             <h2 className="mb-3">📅 Manage Bookings</h2>
-
+            {/* Filter Controls */}
             <div className="row g-3 mb-4">
                 <div className="col-md-4">
                     <label>Status Filter:</label>
-                    <select
-                        className="form-select"
-                        value={statusFilter}
-                        onChange={(e) => setStatusFilter(e.target.value)}
-                    >
+                    <select className="form-select" value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
                         <option value="all">All Bookings</option>
                         <option value="pending">Pending</option>
                         <option value="approved">Approved</option>
@@ -180,6 +190,7 @@ export default function AdminBookings() {
                 </div>
             </div>
 
+            {/* Bookings Table */}
             {loading ? (
                 <p>Loading bookings...</p>
             ) : filtered.length === 0 ? (
@@ -200,7 +211,7 @@ export default function AdminBookings() {
                             </tr>
                         </thead>
                         <tbody>
-                            {filtered.map(booking => {
+                            {filtered.map((booking) => {
                                 const userTime = booking.selectedDateTime
                                     ? moment(booking.selectedDateTime).tz(booking.userTimeZone || "America/Toronto").format("dddd, MMM D YYYY - h:mm A")
                                     : "N/A";
@@ -223,7 +234,8 @@ export default function AdminBookings() {
                                                     ? "danger"
                                                     : booking.status === "deleted"
                                                         ? "secondary"
-                                                        : "warning"}`}>
+                                                        : "warning"
+                                                }`}>
                                                 {booking.status}
                                             </span>
                                         </td>
@@ -235,31 +247,64 @@ export default function AdminBookings() {
                                                 >
                                                     Copy Link
                                                 </button>
-                                            ) : "-"}
+                                            ) : (
+                                                "-"
+                                            )}
                                         </td>
                                         <td>
-                                            {booking.status === "pending" && (
+                                            {rescheduleId === booking.id ? (
+                                                <div>
+                                                    <input
+                                                        type="date"
+                                                        className="form-control form-control-sm mb-1"
+                                                        value={newDate}
+                                                        onChange={(e) => setNewDate(e.target.value)}
+                                                    />
+                                                    <input
+                                                        type="time"
+                                                        className="form-control form-control-sm mb-1"
+                                                        value={newTime}
+                                                        onChange={(e) => setNewTime(e.target.value)}
+                                                    />
+                                                    <button className="btn btn-sm btn-primary me-2" onClick={() => handleReschedule(booking.id)}>
+                                                        Save
+                                                    </button>
+                                                    <button className="btn btn-sm btn-secondary" onClick={() => setRescheduleId(null)}>
+                                                        Cancel
+                                                    </button>
+                                                </div>
+                                            ) : (
                                                 <>
+                                                    {booking.status === "pending" && (
+                                                        <>
+                                                            <button
+                                                                className="btn btn-success btn-sm me-2"
+                                                                onClick={() => handleApprove(booking)}
+                                                            >
+                                                                Approve
+                                                            </button>
+                                                            <button
+                                                                className="btn btn-warning btn-sm me-2"
+                                                                onClick={() => handleDecline(booking.id)}
+                                                            >
+                                                                Decline
+                                                            </button>
+                                                        </>
+                                                    )}
                                                     <button
-                                                        className="btn btn-success btn-sm me-2"
-                                                        onClick={() => handleApprove(booking)}
+                                                        className="btn btn-sm btn-info me-2"
+                                                        onClick={() => setRescheduleId(booking.id)}
                                                     >
-                                                        Approve
+                                                        Reschedule
                                                     </button>
                                                     <button
-                                                        className="btn btn-warning btn-sm me-2"
-                                                        onClick={() => handleDecline(booking.id)}
+                                                        className="btn btn-danger btn-sm"
+                                                        onClick={() => handleDelete(booking.id)}
                                                     >
-                                                        Decline
+                                                        Delete
                                                     </button>
                                                 </>
                                             )}
-                                            <button
-                                                className="btn btn-danger btn-sm"
-                                                onClick={() => handleDelete(booking.id)}
-                                            >
-                                                Delete
-                                            </button>
                                         </td>
                                     </tr>
                                 );

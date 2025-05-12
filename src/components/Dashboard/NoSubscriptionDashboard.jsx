@@ -8,8 +8,10 @@ import "../../styles/Dashboard/NoSubscriptionDashboard.css";
 
 function NoSubscriptionDashboard({ userData }) {
     const { t } = useTranslation();
-    const avatarUrl = userData?.avatarUrl || avatarDefault;
-    const displayName = userData?.firstName || "User";
+    const avatarUrl = userData?.profile?.avatarUrl || avatarDefault;
+    const firstName = userData?.profile?.firstName || "";
+    const lastName = userData?.profile?.lastName || "";
+    const displayName = `${firstName} ${lastName}`.trim() || "User";
 
     return (
         <div className="no-sub-dashboard">

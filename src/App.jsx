@@ -40,6 +40,8 @@ import AdminSetAvailability from "./pages/admin/AdminSetAvailability";
 import AdminCoachCalendar from "./pages/admin/AdminCoachCalendar";
 import AdminQuestionnaireResults from "./pages/admin/AdminQuestionnaireResults";
 import AdminManualNotifications from "./pages/admin/AdminManualNotifications";
+import AdminDeleteSubscriptions from "./pages/admin/AdminDeleteSubscriptions";
+
 
 function App() {
   return (
@@ -86,6 +88,8 @@ function App() {
               <Route path="calendar" element={<AdminCoachCalendar />} />
               <Route path="questionnaire-results" element={<AdminQuestionnaireResults />} />
               <Route path="manual-notifications" element={<AdminManualNotifications />} />
+              <Route path="delete-subscription" element={<AdminDeleteSubscriptions />} />
+
             </Route>
           </Routes>
         </Router>

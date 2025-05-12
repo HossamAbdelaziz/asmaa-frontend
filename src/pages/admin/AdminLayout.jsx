@@ -2,7 +2,7 @@
 import React from "react";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
-import "../../styles/admin/AdminLayout.css"; // ⬅️ We’ll create this CSS file below
+import "../../styles/admin/AdminLayout.css";
 
 const AdminLayout = () => {
     const { logout } = useAuth();
@@ -23,6 +23,7 @@ const AdminLayout = () => {
                     <NavLink to="/admin/add-user">➕ Add User</NavLink>
                     <NavLink to="/admin/edit-subscription">✏️ Edit Subscriptions</NavLink>
                     <NavLink to="/admin/add-weeks-sessions">⏳ Add Weeks/Sessions</NavLink>
+                    <NavLink to="/admin/delete-subscription">🗑️ Delete Subscriptions</NavLink>
                     <NavLink to="/admin/bookings">📅 Manage Bookings</NavLink>
                     <NavLink to="/admin/availability">🕒 Set Availability</NavLink>
                     <NavLink to="/admin/calendar">🗓️ Coach Calendar</NavLink>
