@@ -32,24 +32,54 @@ export default function AdminBookings() {
 
         const enriched = await Promise.all(
             allBookings.map(async booking => {
-                const userSnap = await getDoc(doc(db, "users", booking.userId));
-                const userData = userSnap.exists() ? userSnap.data() : {};
-                const firstName = userData.firstName || "";
-                const lastName = userData.lastName || "";
-                const email = userData.email || "";
+                // 🧠 Log and handle missing userId
+                if (!booking.userId) {
+                    console.warn("❗ Booking missing userId:", booking.id);
+                    return {
+                        ...booking,
+                        userName: "Unknown",
+                        userEmail: "Unknown",
+                    };
+                }
 
-                return {
-                    ...booking,
-                    userName: `${firstName} ${lastName}`.trim() || "Unknown",
-                    userEmail: email || "Unknown",
+                try {
+                    const userSnap = await getDoc(doc(db, "users", booking.userId));
+                    if (!userSnap.exists()) {
+                        console.warn("❗ User not found for userId:", booking.userId);
+                        return {
+                            ...booking,
+                            userName: "Unknown",
+                            userEmail: "Unknown",
+                        };
+                    }
 
-                };
+                    const userData = userSnap.data();
+                    const profile = userData.profile || {};
+                    const firstName = profile.firstName || "";
+                    const lastName = profile.lastName || "";
+                    const email = profile.email || "";
+
+
+                    return {
+                        ...booking,
+                        userName: `${firstName} ${lastName}`.trim() || "Unknown",
+                        userEmail: email || "Unknown",
+                    };
+                } catch (error) {
+                    console.error("❌ Error fetching user data for:", booking.userId, error);
+                    return {
+                        ...booking,
+                        userName: "Unknown",
+                        userEmail: "Unknown",
+                    };
+                }
             })
         );
 
         setBookings(enriched);
         setLoading(false);
     };
+
 
 
 
