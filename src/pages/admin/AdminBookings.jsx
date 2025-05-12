@@ -45,10 +45,14 @@ export default function AdminBookings() {
         setLoading(false);
     };
 
+
+
     const handleApprove = async (booking) => {
         setActionStatus("Processing approval...");
+        const BACKEND_BASE_URL = "https://zoom-backend-5mf0.onrender.com";
+
         try {
-            const res = await axios.post("https://zoom-backend-5mf0.onrender.com/api/zoom/create-meeting", {
+            const res = await axios.post(`${BACKEND_BASE_URL}/api/zoom/create-meeting`, {
                 email: booking.userEmail,
                 name: booking.userName,
                 dateTime: booking.selectedDateTime,
