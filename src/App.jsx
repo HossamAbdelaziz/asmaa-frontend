@@ -27,6 +27,8 @@ import Profile from "./pages/Profile";
 import UserDashboard from "./pages/UserDashboard";
 import TestimonialsPage from "./pages/TestimonialsPage";
 import ContactUsPage from "./pages/ContactUsPage";
+import SuccessPage from "./pages/SuccessPage";
+
 import { Analytics } from "@vercel/analytics/react";
 
 // Admin Pages
@@ -67,6 +69,8 @@ function App() {
               <Route path="/dashboard" element={<UserDashboard />} />
               <Route path="/testimonials" element={<TestimonialsPage />} />
               <Route path="/contact" element={<ContactUsPage />} />
+              <Route path="/success" element={<SuccessPage />} />
+
             </Route>
 
             {/* === PROTECTED ADMIN ROUTES === */}
