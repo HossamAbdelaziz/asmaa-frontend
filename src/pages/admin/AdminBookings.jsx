@@ -53,10 +53,14 @@ export default function AdminBookings() {
 
         try {
             const res = await axios.post(`${BACKEND_BASE_URL}/api/zoom/create-meeting`, {
-                email: booking.userEmail,
-                name: booking.userName,
-                dateTime: booking.selectedDateTime,
+                topic: booking.programTitle || "Coaching Session",
+                start_time: booking.selectedDateTime,
+                duration: 60, // default to 60 minutes, adjust if needed
+                timezone: booking.timezone || "America/Toronto",
+                userEmail: booking.userEmail,
+                userName: booking.userName,
             });
+
 
             const zoomLink = res.data.zoomLink || "https://zoom.us/my/coachasmaa";
 
