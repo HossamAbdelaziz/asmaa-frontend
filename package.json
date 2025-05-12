@@ -19,7 +19,6 @@
     "@fullcalendar/react": "^6.1.17",
     "@fullcalendar/timegrid": "^6.1.17",
     "@toast-ui/calendar": "^2.0.1",
-    "@toast-ui/react-calendar": "^1.0.6",
     "axios": "^1.9.0",
     "bootstrap": "^5.3.5",
     "classnames": "^2.5.1",
