@@ -21,8 +21,17 @@ const Navbar = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const dropdownRef = useRef();
+    const drawerRef = useRef();
+    const [isAnimating, setIsAnimating] = useState(false);
+    const [animateDrawerOpen, setAnimateDrawerOpen] = useState(false);
 
-    // Load the Firestore user doc for name & avatar when auth is ready
+    const closeDrawer = () => {
+        setAnimateDrawerOpen(false); // ✅ reset this here
+        setIsAnimating(true);
+        setDrawerOpen(false);
+    };
+
+    // Load the Firestore user doc for name & avatar
     useEffect(() => {
         if (!currentUser) {
             setProfileName("User");
@@ -60,6 +69,23 @@ const Navbar = () => {
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, []);
 
+    // ✅ Close drawer when clicking outside of it
+    useEffect(() => {
+        const handleClickOutsideDrawer = (e) => {
+            if (drawerRef.current && !drawerRef.current.contains(e.target)) {
+                setDrawerOpen(false);
+            }
+        };
+
+        if (drawerOpen) {
+            document.addEventListener("mousedown", handleClickOutsideDrawer);
+        }
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutsideDrawer);
+        };
+    }, [drawerOpen]);
+
     const handleLogout = async () => {
         await signOut(auth);
         navigate("/login");
@@ -76,10 +102,11 @@ const Navbar = () => {
             <nav className="main-navbar">
                 <div className="navbar-container">
                     {/* Brand */}
-                    <div className="brand">
+                    <Link to="/" className="brand" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
                         <img src="/assets/logos/logo3.png" alt="Logo" />
                         <span>Asmaa Gadelrab</span>
-                    </div>
+                    </Link>
+
 
                     {/* Navigation Links */}
                     <div className="navbar-links">
@@ -92,7 +119,7 @@ const Navbar = () => {
                         <Link to="/contact"><i className="fas fa-envelope me-1" /> {t("navbar.contact")}</Link>
                     </div>
 
-                    {/* Language Toggle & Auth Buttons */}
+                    {/* Language Toggle & Auth */}
                     <div className="auth-buttons">
                         <div className="language-toggle">
                             <span className="lang-icon" onClick={() => changeLanguage("en")}>EN</span>
@@ -110,9 +137,14 @@ const Navbar = () => {
                                     <img
                                         src={avatarUrl}
                                         alt="avatar"
+                                        onError={(e) => {
+                                            e.target.onerror = null;
+                                            e.target.src = "/default-avatar.png";
+                                        }}
                                         className="rounded-circle"
                                         style={{ width: "35px", height: "35px", objectFit: "cover", marginRight: "8px" }}
                                     />
+
                                     {profileName} <i className="fas fa-caret-down ms-1" />
                                 </button>
 
@@ -135,46 +167,70 @@ const Navbar = () => {
                 </div>
 
                 {/* Hamburger (mobile) */}
-                <button className="hamburger-btn d-md-none" onClick={() => setDrawerOpen(true)}>☰</button>
+                <button
+                    className="hamburger-btn d-md-none"
+                    onClick={() => {
+                        setDrawerOpen(true);
+                        setTimeout(() => setAnimateDrawerOpen(true), 10);
+                    }}
+                >
+                    ☰
+                </button>
+
             </nav>
 
-            {/* Mobile Drawer */}
-            {drawerOpen && (
-                <div className="mobile-drawer">
+            {(drawerOpen || isAnimating) && (
+                <div
+                    className={`mobile-drawer ${drawerOpen && animateDrawerOpen ? "open" : drawerOpen ? "" : "closing"
+                        }`}
+                    ref={drawerRef}
+                    onTransitionEnd={() => {
+                        if (!drawerOpen) setIsAnimating(false);
+                    }}
+                >
                     <div className="drawer-header">
-                        <button className="btn-close" onClick={() => setDrawerOpen(false)}>×</button>
+                        <button className="btn-close" onClick={closeDrawer}>×</button>
                     </div>
 
                     {currentUser && (
                         <div className="drawer-user text-center mb-4">
-                            <img src={avatarUrl} alt="avatar" className="drawer-avatar" />
+                            <img
+                                src={avatarUrl}
+                                alt="avatar"
+                                className="drawer-avatar"
+                                onError={(e) => {
+                                    e.target.onerror = null;
+                                    e.target.src = "/default-avatar.png";
+                                }}
+                            />
+
                             <p className="drawer-name">{profileName}</p>
                         </div>
                     )}
 
                     <div className="drawer-body d-flex flex-column gap-3">
-                        <Link to="/" className="drawer-link" onClick={() => setDrawerOpen(false)}>
+                        <Link to="/" className="drawer-link" onClick={closeDrawer}>
                             <i className="fas fa-home me-2" /> {t("navbar.home")}
                         </Link>
-                        <Link to="/about" className="drawer-link" onClick={() => setDrawerOpen(false)}>
+                        <Link to="/about" className="drawer-link" onClick={closeDrawer}>
                             <i className="fas fa-info-circle me-2" /> {t("navbar.about")}
                         </Link>
-                        <Link to="/programs" className="drawer-link" onClick={() => setDrawerOpen(false)}>
+                        <Link to="/programs" className="drawer-link" onClick={closeDrawer}>
                             <i className="fas fa-table me-2" /> {t("navbar.programs")}
                         </Link>
-                        <Link to="/testimonials" className="drawer-link" onClick={() => setDrawerOpen(false)}>
+                        <Link to="/testimonials" className="drawer-link" onClick={closeDrawer}>
                             <i className="fas fa-comment-dots me-2" /> {t("navbar.testimonials")}
                         </Link>
-                        <Link to="/contact" className="drawer-link" onClick={() => setDrawerOpen(false)}>
+                        <Link to="/contact" className="drawer-link" onClick={closeDrawer}>
                             <i className="fas fa-envelope me-2" /> {t("navbar.contact")}
                         </Link>
 
                         {currentUser ? (
                             <>
-                                <Link to="/dashboard" className="drawer-link" onClick={() => setDrawerOpen(false)}>
+                                <Link to="/dashboard" className="drawer-link" onClick={closeDrawer}>
                                     <i className="fas fa-tachometer-alt me-2" /> Dashboard
                                 </Link>
-                                <Link to="/profile" className="drawer-link" onClick={() => setDrawerOpen(false)}>
+                                <Link to="/profile" className="drawer-link" onClick={closeDrawer}>
                                     <i className="fas fa-user me-2" /> Profile
                                 </Link>
                                 <button className="btn btn-danger mt-3" onClick={handleLogout}>
@@ -183,10 +239,10 @@ const Navbar = () => {
                             </>
                         ) : (
                             <>
-                                <Link to="/login" className="btn-login w-100 text-center" onClick={() => setDrawerOpen(false)}>
+                                <Link to="/login" className="btn-login w-100 text-center" onClick={closeDrawer}>
                                     <i className="fas fa-sign-in-alt me-2" /> {t("navbar.login")}
                                 </Link>
-                                <Link to="/signup" className="btn-signup w-100 text-center" onClick={() => setDrawerOpen(false)}>
+                                <Link to="/signup" className="btn-signup w-100 text-center" onClick={closeDrawer}>
                                     <i className="fas fa-user-plus me-2" /> {t("navbar.signup")}
                                 </Link>
                             </>
@@ -194,6 +250,8 @@ const Navbar = () => {
                     </div>
                 </div>
             )}
+
+
         </>
     );
 };

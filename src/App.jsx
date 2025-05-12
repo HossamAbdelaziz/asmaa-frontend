@@ -5,6 +5,8 @@ import { AuthProvider } from "./context/AuthContext";
 import { AdminProvider } from "./context/AdminContext";
 import RequireAdmin from "./utils/RequireAdmin";
 import "./index.css";
+import ScrollToTop from "./components/ScrollToTop";
+
 
 // Layouts
 import Layout from "./components/Layout";
@@ -43,6 +45,7 @@ function App() {
     <AuthProvider>
       <AdminProvider>
         <Router>
+          <ScrollToTop />
           <Routes>
             {/* === PUBLIC + USER ROUTES === */}
             <Route element={<Layout />}>
