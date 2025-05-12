@@ -32,11 +32,15 @@ export default function AdminBookings() {
             allBookings.map(async booking => {
                 const userSnap = await getDoc(doc(db, "users", booking.userId));
                 const userData = userSnap.exists() ? userSnap.data() : {};
+                const firstName = userData.firstName || "";
+                const lastName = userData.lastName || "";
+                const email = userData.email || "";
+
                 return {
                     ...booking,
-                    userName: userData.firstName + " " + userData.lastName || "Unknown",
-                    userEmail: userData.email || "Unknown",
-                    userTimeZone: booking.timezone || "America/New_York",
+                    userName: `${firstName} ${lastName}`.trim() || "Unknown",
+                    userEmail: email || "Unknown",
+
                 };
             })
         );
