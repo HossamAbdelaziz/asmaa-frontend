@@ -9,43 +9,61 @@ export default function SuccessPage() {
     const { currentUser, loading, refreshUserProfile } = useAuth();
     const [searchParams] = useSearchParams();
     const [error, setError] = useState("");
+    const [status, setStatus] = useState("loading"); // ⏳ loading | success | error
     const navigate = useNavigate();
 
     useEffect(() => {
-        const handleSuccess = async () => {
+        const processProgramPurchase = async () => {
             const programId = searchParams.get("programId");
             if (!programId) {
-                setError("Invalid program ID.");
+                setError("Invalid program ID in URL.");
+                setStatus("error");
                 return;
             }
 
-            // Wait for Firebase auth to finish loading
-            if (loading) return;
+            if (loading) return; // ⏳ Wait until Firebase finishes loading
 
             if (!currentUser) {
-                // User not logged in, redirect to login with return param
-                navigate(`/login?returnTo=/success?programId=${programId}`);
+                // ❌ Not logged in – save intended redirect and programId
+                localStorage.setItem("pendingProgramId", programId);
+                navigate("/login");
                 return;
             }
 
             try {
-                // Get program info from Firestore
-                const programSnap = await getDoc(doc(db, "programs", programId));
-                if (!programSnap.exists()) {
-                    setError("Program not found.");
+                // 🧠 Check if already has a subscription
+                const userRef = doc(db, "users", currentUser.uid);
+                const userSnap = await getDoc(userRef);
+                const existingSub = userSnap.data()?.subscription;
+
+                if (existingSub?.programId === programId) {
+                    // Already subscribed – skip
+                    navigate("/dashboard");
                     return;
                 }
 
-                const program = programSnap.data();
+                // ✅ Fetch program info
+                const programSnap = await getDoc(doc(db, "programs", programId));
+                if (!programSnap.exists()) {
+                    console.warn("Program ID from Stripe is:", programId);
+                    setError(`Program not found. Please contact support and provide this ID: ${programId}`);
+                    setStatus("error");
+                    return;
+                }
 
-                // Save subscription to user's profile
-                const userRef = doc(db, "users", currentUser.uid);
+
+                const program = programSnap.data();
+                const startDate = new Date();
+                const endDate = new Date();
+                endDate.setDate(startDate.getDate() + program.durationWeeks * 7);
+
+                // 🔐 Assign program to user
                 await updateDoc(userRef, {
                     subscription: {
                         programId,
                         programTitle: program.title,
-                        startDate: new Date().toISOString().split("T")[0],
-                        endDate: new Date(Date.now() + program.durationWeeks * 7 * 24 * 60 * 60 * 1000).toISOString().split("T")[0],
+                        startDate: startDate.toISOString().split("T")[0],
+                        endDate: endDate.toISOString().split("T")[0],
                         status: "active",
                         totalWeeks: program.durationWeeks,
                         originalDuration: program.durationWeeks,
@@ -56,26 +74,32 @@ export default function SuccessPage() {
                     },
                 });
 
-                // Refresh context and redirect
                 await refreshUserProfile();
                 navigate("/dashboard");
             } catch (err) {
-                console.error("Success page error:", err);
+                console.error("Failed to assign program:", err);
                 setError("Something went wrong while processing your subscription.");
+                setStatus("error");
             }
         };
 
-        handleSuccess();
+        processProgramPurchase();
     }, [currentUser, loading, navigate, searchParams]);
 
-    if (error) {
-        return <div className="container mt-5"><h4>{error}</h4></div>;
-    }
-
     return (
-        <div className="container mt-5">
-            <h4>⏳ Finalizing your subscription...</h4>
-            <p>Please wait, you will be redirected to your dashboard shortly.</p>
+        <div className="container mt-5 text-center">
+            {status === "loading" && (
+                <>
+                    <h3>⏳ Finalizing Your Subscription...</h3>
+                    <p>Please wait, you will be redirected shortly.</p>
+                </>
+            )}
+            {status === "error" && (
+                <>
+                    <h3>⚠️ Something Went Wrong</h3>
+                    <p className="text-danger">{error}</p>
+                </>
+            )}
         </div>
     );
 }
