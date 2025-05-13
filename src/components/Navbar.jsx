@@ -11,12 +11,12 @@ import { useTranslation } from "react-i18next";
 
 const Navbar = () => {
     const { t, i18n } = useTranslation();
-    const { currentUser, userProfile, loading } = useAuth();
+    const { currentUser, userProfile, loading, avatarUrl } = useAuth();
+    const profileName =
+        userProfile?.profile?.firstName || userProfile?.firstName || "User";
 
     const [drawerOpen, setDrawerOpen] = useState(false);
     const [dropdownOpen, setDropdownOpen] = useState(false);
-    const [profileName, setProfileName] = useState("User");
-    const [avatarUrl, setAvatarUrl] = useState("/default-avatar.png");
 
     const location = useLocation();
     const navigate = useNavigate();
@@ -26,37 +26,11 @@ const Navbar = () => {
     const [animateDrawerOpen, setAnimateDrawerOpen] = useState(false);
 
     const closeDrawer = () => {
-        setAnimateDrawerOpen(false); // ✅ reset this here
+        setAnimateDrawerOpen(false);
         setIsAnimating(true);
         setDrawerOpen(false);
     };
 
-    // Load the Firestore user doc for name & avatar
-    useEffect(() => {
-        if (!currentUser) {
-            setProfileName("User");
-            setAvatarUrl("/default-avatar.png");
-            return;
-        }
-        (async () => {
-            try {
-                const snap = await getDoc(doc(db, "users", currentUser.uid));
-                if (snap.exists()) {
-                    const data = snap.data();
-                    const prof = data.profile || {};
-                    const nameFromProfile = prof.firstName || prof.displayName;
-                    const avatarFromProfile = prof.avatarUrl;
-                    const nameFromRoot = data.firstName || data.displayName;
-                    const avatarFromRoot = data.avatarUrl;
-
-                    setProfileName(nameFromProfile || nameFromRoot || "User");
-                    setAvatarUrl(avatarFromProfile || avatarFromRoot || "/default-avatar.png");
-                }
-            } catch (err) {
-                console.error("Navbar profile load error:", err);
-            }
-        })();
-    }, [currentUser]);
 
     // Close dropdown on outside click
     useEffect(() => {

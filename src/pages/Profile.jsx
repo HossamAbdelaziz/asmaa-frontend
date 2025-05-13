@@ -14,8 +14,9 @@ import {
 import AvatarCropModal from "../components/AvatarCropModal";
 import "../styles/Profile.css";
 
+
 const Profile = () => {
-    const { currentUser } = useAuth();
+    const { currentUser, refreshUserProfile } = useAuth();
     const topRef = useRef(null);
 
     const [profile, setProfile] = useState({
@@ -125,7 +126,9 @@ const Profile = () => {
             });
 
             setSuccessMsg("Profile updated successfully.");
+            await refreshUserProfile(); // <-- 🔄 Update context immediately
             topRef.current?.scrollIntoView({ behavior: "smooth" });
+
         } catch (err) {
             console.error(err);
             setError("Failed to save profile.");

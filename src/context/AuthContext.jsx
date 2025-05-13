@@ -8,9 +8,23 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [currentUser, setCurrentUser] = useState(null);      // Firebase user object
-    const [userProfile, setUserProfile] = useState(null);      // User's profile from Firestore
+    const [userProfile, setUserProfile] = useState(null);      // Firestore user profile
+    const [avatarUrl, setAvatarUrl] = useState("/assets/avatars/avatar-default.png"); // 🔄 Avatar for UI
     const [isAdmin, setIsAdmin] = useState(false);             // Admin check
     const [loading, setLoading] = useState(true);              // Auth check loading
+
+    // ✅ Refresh profile manually (e.g. after update)
+    const refreshUserProfile = async () => {
+        if (!auth.currentUser) return;
+        const snap = await getDoc(doc(db, "users", auth.currentUser.uid));
+        if (snap.exists()) {
+            const data = snap.data();
+            setUserProfile(data);
+
+            const avatar = data.avatarUrl || data.profile?.avatarUrl || "/assets/avatars/avatar-default.png";
+            setAvatarUrl(avatar);
+        }
+    };
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -18,22 +32,25 @@ export const AuthProvider = ({ children }) => {
             setCurrentUser(user);
 
             if (user) {
-                // 🔍 Check regular user profile
                 const userDoc = doc(db, "users", user.uid);
                 const userSnap = await getDoc(userDoc);
+
                 if (userSnap.exists()) {
                     const data = userSnap.data();
                     setUserProfile(data);
+                    const avatar = data.avatarUrl || data.profile?.avatarUrl || "/assets/avatars/avatar-default.png";
+                    setAvatarUrl(avatar);
                 } else {
                     setUserProfile(null);
+                    setAvatarUrl("/assets/avatars/avatar-default.png");
                 }
 
-                // 🔐 Check if user is an admin (in "admins" collection)
                 const adminDoc = doc(db, "admins", user.uid);
                 const adminSnap = await getDoc(adminDoc);
                 setIsAdmin(adminSnap.exists());
             } else {
                 setUserProfile(null);
+                setAvatarUrl("/assets/avatars/avatar-default.png");
                 setIsAdmin(false);
             }
 
@@ -43,14 +60,12 @@ export const AuthProvider = ({ children }) => {
         return () => unsubscribe();
     }, []);
 
-    // ✅ Profile completeness check
     const isProfileComplete = () => {
         if (!userProfile) return false;
         const { firstName, lastName, phone, country, age } = userProfile;
         return firstName && lastName && phone && country && age;
     };
 
-    // ✅ Logout (shared for both user/admin)
     const logout = () => {
         return signOut(auth);
     };
@@ -60,11 +75,15 @@ export const AuthProvider = ({ children }) => {
             value={{
                 currentUser,
                 userProfile,
+                setUserProfile,
+                avatarUrl,
+                setAvatarUrl,
                 isAdmin,
                 loading,
                 logout,
                 isEmailVerified: currentUser?.emailVerified || false,
                 isProfileComplete,
+                refreshUserProfile, // ✅ You must expose this
             }}
         >
             {children}
