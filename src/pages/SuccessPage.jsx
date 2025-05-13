@@ -1,104 +1,82 @@
-// src/pages/SuccessPage.jsx
 import React, { useEffect, useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import { doc, getDoc, updateDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "../firebase/firebaseConfig";
-import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { useAuth } from "../context/AuthContext";
 
 export default function SuccessPage() {
-    const { currentUser, loading, refreshUserProfile } = useAuth();
     const [searchParams] = useSearchParams();
-    const [error, setError] = useState("");
-    const [status, setStatus] = useState("loading"); // ⏳ loading | success | error
+    const programId = searchParams.get("programId");
     const navigate = useNavigate();
+    const { currentUser, loading } = useAuth();
+
+    const [error, setError] = useState("");
 
     useEffect(() => {
-        const processProgramPurchase = async () => {
-            const programId = searchParams.get("programId");
-            if (!programId) {
-                setError("Invalid program ID in URL.");
-                setStatus("error");
-                return;
-            }
-
-            if (loading) return; // ⏳ Wait until Firebase finishes loading
-
-            if (!currentUser) {
-                // ❌ Not logged in – save intended redirect and programId
-                localStorage.setItem("pendingProgramId", programId);
-                navigate("/login");
-                return;
-            }
+        const assignProgramToUser = async () => {
+            if (!currentUser || loading) return;
 
             try {
-                // 🧠 Check if already has a subscription
-                const userRef = doc(db, "users", currentUser.uid);
-                const userSnap = await getDoc(userRef);
-                const existingSub = userSnap.data()?.subscription;
+                const programRef = doc(db, "programs", programId);
+                const programSnap = await getDoc(programRef);
 
-                if (existingSub?.programId === programId) {
-                    // Already subscribed – skip
-                    navigate("/dashboard");
-                    return;
-                }
-
-                // ✅ Fetch program info
-                const programSnap = await getDoc(doc(db, "programs", programId));
                 if (!programSnap.exists()) {
-                    console.warn("Program ID from Stripe is:", programId);
                     setError(`Program not found. Please contact support and provide this ID: ${programId}`);
-                    setStatus("error");
                     return;
                 }
-
 
                 const program = programSnap.data();
                 const startDate = new Date();
                 const endDate = new Date();
                 endDate.setDate(startDate.getDate() + program.durationWeeks * 7);
 
-                // 🔐 Assign program to user
-                await updateDoc(userRef, {
-                    subscription: {
-                        programId,
-                        programTitle: program.title,
-                        startDate: startDate.toISOString().split("T")[0],
-                        endDate: endDate.toISOString().split("T")[0],
-                        status: "active",
-                        totalWeeks: program.durationWeeks,
-                        originalDuration: program.durationWeeks,
-                        originalSessions: program.sessions,
-                        sessionsLeft: program.sessions,
-                        bonusWeeks: 0,
-                        bonusSessions: 0,
-                    },
+                const subscription = {
+                    programId,
+                    programTitle: program.title,
+                    status: "active",
+                    startDate: startDate.toISOString().split("T")[0],
+                    endDate: endDate.toISOString().split("T")[0],
+                    originalDuration: program.durationWeeks,
+                    totalWeeks: program.durationWeeks,
+                    originalSessions: program.sessions,
+                    sessionsLeft: program.sessions,
+                    bonusWeeks: 0,
+                    bonusSessions: 0,
+                    createdAt: serverTimestamp()
+                };
+
+                await updateDoc(doc(db, "users", currentUser.uid), {
+                    subscription
                 });
 
-                await refreshUserProfile();
                 navigate("/dashboard");
             } catch (err) {
-                console.error("Failed to assign program:", err);
-                setError("Something went wrong while processing your subscription.");
-                setStatus("error");
+                console.error("🔥 Error assigning program:", err);
+                setError("Something went wrong. Please contact support.");
             }
         };
 
-        processProgramPurchase();
-    }, [currentUser, loading, navigate, searchParams]);
+        if (!loading) {
+            if (!currentUser) {
+                // Not logged in – redirect to login with return path
+                navigate(`/login?redirect=/success?programId=${programId}`);
+            } else {
+                assignProgramToUser();
+            }
+        }
+    }, [currentUser, loading, programId, navigate]);
 
     return (
         <div className="container mt-5 text-center">
-            {status === "loading" && (
-                <>
-                    <h3>⏳ Finalizing Your Subscription...</h3>
-                    <p>Please wait, you will be redirected shortly.</p>
-                </>
-            )}
-            {status === "error" && (
-                <>
-                    <h3>⚠️ Something Went Wrong</h3>
-                    <p className="text-danger">{error}</p>
-                </>
+            {error ? (
+                <div className="alert alert-danger">
+                    <h4>⚠️ Something Went Wrong</h4>
+                    <p>{error}</p>
+                </div>
+            ) : (
+                <div className="alert alert-info">
+                    Processing your program... please wait ⏳
+                </div>
             )}
         </div>
     );
