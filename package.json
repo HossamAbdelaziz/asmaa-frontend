@@ -51,11 +51,11 @@
     "yup": "^1.6.1"
   },
   "devDependencies": {
+    "@capacitor-firebase/messaging": "^7.2.0",
     "@capacitor/android": "^7.2.0",
     "@capacitor/assets": "^3.0.5",
     "@capacitor/cli": "^7.2.0",
     "@capacitor/core": "^7.2.0",
-    "@capacitor-firebase/messaging": "^7.2.0",
     "@capacitor/push-notifications": "^7.0.1",
     "@capacitor/splash-screen": "^7.0.1",
     "@eslint/js": "^9.22.0",
