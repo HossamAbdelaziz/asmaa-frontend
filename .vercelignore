@@ -1,3 +1,5 @@
+# Force deploy for Vercel
+
 android/
 ios/
 capacitor.config.*
