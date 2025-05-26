@@ -14,13 +14,21 @@
       },
       "oauth_client": [
         {
+          "client_id": "687684731229-5ku5gipk80vqphbn077mjf0okjjegtfo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.asmaagad.coachapp",
+            "certificate_hash": "44400b19f9c2fd228c33c724b69659d201865c00"
+          }
+        },
+        {
           "client_id": "687684731229-l6296i32tsdet0nfdgd5olk34hd0o259.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyD9EDCRW-0352gPsjRZA0b1W-yiTrNSCvM"
+          "current_key": "AIzaSyAF6VxhogwZ8tIIR5IDliegwJyvfp5Kius"
         }
       ],
       "services": {
