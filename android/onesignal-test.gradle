@@ -1,0 +1,16 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        google()
+    }
+}
+
+apply plugin: 'java'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'com.onesignal:OneSignal:5.1.6'
+}

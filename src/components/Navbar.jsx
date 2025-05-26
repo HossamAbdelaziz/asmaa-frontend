@@ -8,10 +8,11 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase/firebaseConfig";
 import "../styles/components/Navbar.css";
 import { useTranslation } from "react-i18next";
+import NotificationBell from '../components/NotificationBell'; // adjust path if needed
 
 const Navbar = () => {
     const { t, i18n } = useTranslation();
-    const { currentUser, userProfile, loading, avatarUrl } = useAuth();
+    const { currentUser, userProfile, loading, avatarUrl, isAdmin } = useAuth();
     const profileName =
         userProfile?.profile?.firstName || userProfile?.firstName || "User";
 
@@ -91,6 +92,7 @@ const Navbar = () => {
                         <Link to="/programs"><i className="fas fa-table me-1" /> {t("navbar.programs")}</Link>
                         <Link to="/testimonials"><i className="fas fa-comment-dots me-1" /> {t("navbar.testimonials")}</Link>
                         <Link to="/contact"><i className="fas fa-envelope me-1" /> {t("navbar.contact")}</Link>
+
                     </div>
 
                     {/* Language Toggle & Auth */}
@@ -141,15 +143,19 @@ const Navbar = () => {
                 </div>
 
                 {/* Hamburger (mobile) */}
-                <button
-                    className="hamburger-btn d-md-none"
-                    onClick={() => {
-                        setDrawerOpen(true);
-                        setTimeout(() => setAnimateDrawerOpen(true), 10);
-                    }}
-                >
-                    ☰
-                </button>
+                <div className="navbar-icons">
+                    {currentUser && <NotificationBell />}
+                    <button
+                        className="hamburger-btn d-md-none"
+                        onClick={() => {
+                            setDrawerOpen(true);
+                            setTimeout(() => setAnimateDrawerOpen(true), 10);
+                        }}
+                    >
+                        ☰
+                    </button>
+                </div>
+
 
             </nav>
 
@@ -199,19 +205,27 @@ const Navbar = () => {
                             <i className="fas fa-envelope me-2" /> {t("navbar.contact")}
                         </Link>
 
-                        {currentUser ? (
+                        {!loading && currentUser ? (
                             <>
                                 <Link to="/dashboard" className="drawer-link" onClick={closeDrawer}>
                                     <i className="fas fa-tachometer-alt me-2" /> Dashboard
                                 </Link>
+
+                                {isAdmin && (
+                                    <Link to="/admin" className="drawer-link" onClick={closeDrawer}>
+                                        <i className="fas fa-user-shield me-2" /> Admin Panel
+                                    </Link>
+                                )}
+
                                 <Link to="/profile" className="drawer-link" onClick={closeDrawer}>
                                     <i className="fas fa-user me-2" /> Profile
                                 </Link>
+
                                 <button className="btn btn-danger mt-3" onClick={handleLogout}>
                                     <i className="fas fa-sign-out-alt me-2" /> Logout
                                 </button>
                             </>
-                        ) : (
+                        ) : !loading && (
                             <>
                                 <Link to="/login" className="btn-login w-100 text-center" onClick={closeDrawer}>
                                     <i className="fas fa-sign-in-alt me-2" /> {t("navbar.login")}
@@ -221,8 +235,15 @@ const Navbar = () => {
                                 </Link>
                             </>
                         )}
+                        <div className="language-toggle text-center mt-4 mb-4">
+                            <span className="lang-icon" onClick={() => changeLanguage('en')}>EN</span>
+                            <span className="lang-icon" onClick={() => changeLanguage('ar')}>AR</span>
+                        </div>
+
+
                     </div>
                 </div>
+
             )}
 
 

@@ -1,0 +1,23 @@
+.notif-detail {
+    max-width: 600px;
+    margin: 30px auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    font-family: sans-serif;
+}
+
+.notif-image {
+    width: 100%;
+    max-height: 300px;
+    object-fit: cover;
+    margin-top: 15px;
+    border-radius: 8px;
+}
+
+.notif-timestamp {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #888;
+}

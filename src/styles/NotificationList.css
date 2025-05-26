@@ -1,0 +1,114 @@
+/* ===============================
+📋 Cleaned Notification List Styling
+No horizontal scroll on any device
+=============================== */
+
+body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    /* ✅ Prevent body from scrolling horizontally */
+}
+
+.container {
+    max-width: 100%;
+    padding: 0 16px;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+/* ✅ Main notification item */
+.notification-list-item {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding: 16px;
+    margin-bottom: 16px;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    align-items: flex-start;
+    box-sizing: border-box;
+    width: 100%;
+    overflow: hidden;
+}
+
+.notification-list-item:hover {
+    background-color: #f7f7f7;
+}
+
+/* ✅ Thumbnail image */
+.notification-list-item img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 10px;
+    flex-shrink: 0;
+}
+
+/* ✅ Notification content */
+.notification-list-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+    /* ✅ Prevent overflow */
+}
+
+/* ✅ Title */
+.notification-list-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
+    word-break: break-word;
+}
+
+/* ✅ Timestamp */
+.notification-list-time {
+    font-size: 0.85rem;
+    color: #999;
+    margin-top: 4px;
+    text-align: right;
+    word-break: break-word;
+}
+
+/* ✅ Body text */
+.notification-list-body {
+    font-size: 0.95rem;
+    color: #555;
+    line-height: 1.5;
+    word-break: break-word;
+}
+
+/* ✅ Seen/Clicked status */
+.notification-list-status {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 8px;
+    font-size: 0.85rem;
+    color: #666;
+}
+
+/* ✅ Make sure all items are responsive and stay within screen */
+@media (max-width: 768px) {
+    .notification-list-item {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .notification-list-item img {
+        width: 100%;
+        height: auto;
+        border-radius: 10px;
+    }
+
+    .notification-list-time {
+        text-align: left;
+    }
+}

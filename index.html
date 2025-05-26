@@ -36,9 +36,15 @@
     rel="stylesheet" />
 </head>
 
-<body>
+<body class="capacitor-android">
   <div id="root"></div>
   <script type="module" src="/src/main.jsx"></script>
+  <!-- <script>
+    if (navigator.userAgent.includes("Capacitor")) {
+      document.body.classList.add("capacitor-android");
+    }
+  </script>-->
+
 </body>
 
 </html>

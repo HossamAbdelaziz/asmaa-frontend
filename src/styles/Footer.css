@@ -231,3 +231,145 @@
         padding: 6px 12px;
     }
 }
+
+/* ===============================
+   📱 Final Android Footer Styling (Capacitor Only)
+================================== */
+
+body.capacitor-android .footer-section {
+    background-color: var(--bg-header-footer) !important;
+    padding: 24px 16px !important;
+    text-align: center !important;
+    font-family: var(--font-body) !important;
+}
+
+body.capacitor-android .footer-container {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 16px !important;
+    text-align: center !important;
+}
+
+body.capacitor-android .footer-left {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 10px !important;
+    margin-left: 0 !important;
+}
+
+body.capacitor-android .footer-left img {
+    width: 80px !important;
+    height: auto !important;
+}
+
+body.capacitor-android .footer-logo-name {
+    font-size: 1rem !important;
+    font-weight: bold !important;
+    color: var(--text-primary) !important;
+}
+
+body.capacitor-android .footer-tagline {
+    font-size: 0.8rem !important;
+    color: var(--text-subtle) !important;
+    line-height: 1.4 !important;
+}
+
+body.capacitor-android .footer-name-tagline {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 4px !important;
+}
+
+body.capacitor-android .footer-links {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: 16px !important;
+    font-size: 15px !important;
+    font-weight: 500 !important;
+    margin-top: 12px !important;
+}
+
+body.capacitor-android .footer-links a {
+    color: var(--text-primary) !important;
+    text-decoration: none !important;
+    padding: 4px 8px !important;
+}
+
+body.capacitor-android .footer-right {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 12px !important;
+    margin-top: 12px !important;
+}
+
+body.capacitor-android .social-icons {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 20px !important;
+    margin-top: 10px !important;
+    font-size: 20px !important;
+}
+
+body.capacitor-android .social-icons a {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 999px !important;
+    background-color: #fff !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+    text-decoration: none !important;
+}
+
+body.capacitor-android .social-icons a[href*="instagram"] {
+    color: #E1306C !important;
+}
+
+body.capacitor-android .social-icons a[href*="wa.me"] {
+    color: #25D366 !important;
+}
+
+body.capacitor-android .footer-lang {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    font-size: 0.9rem !important;
+    color: var(--text-primary) !important;
+}
+
+body.capacitor-android .footer-lang button {
+    padding: 4px 10px !important;
+    border-radius: 6px !important;
+    font-size: 13px !important;
+    border: 1px solid var(--text-primary) !important;
+    background: transparent !important;
+    cursor: pointer !important;
+    color: var(--text-primary) !important;
+    font-family: var(--font-body) !important;
+}
+
+body.capacitor-android .footer-lang button:hover {
+    background: var(--text-primary) !important;
+    color: #fff !important;
+}
+
+body.capacitor-android .footer-bottom {
+    margin-top: 20px !important;
+    padding: 8px 16px !important;
+    text-align: center !important;
+    background: #f7f7f7 !important;
+    color: var(--text-subtle) !important;
+    font-size: 0.8rem !important;
+    border-radius: 6px !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+    width: fit-content !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}

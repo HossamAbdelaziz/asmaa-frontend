@@ -14,7 +14,6 @@ export default function AdminUsersReport() {
             const list = snap.docs.map(doc => {
                 const data = doc.data();
                 const profile = data.profile || {};
-
                 const firstName = profile.firstName || "";
                 const lastName = profile.lastName || "";
                 const fullName = `${firstName} ${lastName}`.trim();
@@ -29,10 +28,10 @@ export default function AdminUsersReport() {
                     createdLabel: data.createdAt
                         ? data.createdAt.toDate().toLocaleDateString()
                         : "Unknown",
+                    fcmTokens: data.messaging?.fcmTokens || []
                 };
             });
 
-            // Sort by most recent
             list.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
 
             setUsers(list);
@@ -44,7 +43,6 @@ export default function AdminUsersReport() {
 
     useEffect(() => {
         const lowerSearch = searchTerm.toLowerCase();
-
         const filtered = users.filter(user => {
             const matchesSearch =
                 user.name.toLowerCase().includes(lowerSearch) ||
@@ -62,7 +60,6 @@ export default function AdminUsersReport() {
         <div>
             <h2 className="mb-4">👥 All Registered Users</h2>
 
-            {/* Filters */}
             <div className="d-flex flex-wrap gap-3 mb-3 align-items-center">
                 <input
                     type="text"
@@ -72,7 +69,6 @@ export default function AdminUsersReport() {
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                 />
-
                 <select
                     className="form-select"
                     style={{ maxWidth: "200px" }}
@@ -85,7 +81,6 @@ export default function AdminUsersReport() {
                         </option>
                     ))}
                 </select>
-
                 <button
                     className="btn btn-outline-secondary"
                     onClick={() => {
@@ -97,7 +92,6 @@ export default function AdminUsersReport() {
                 </button>
             </div>
 
-            {/* Table */}
             <div className="table-responsive">
                 <table className="table table-bordered align-middle text-center">
                     <thead className="table-dark">
@@ -112,21 +106,49 @@ export default function AdminUsersReport() {
                     <tbody>
                         {filteredUsers.length > 0 ? (
                             filteredUsers.map(user => (
-                                <tr key={user.id}>
-                                    <td>{user.name}</td>
-                                    <td className={user.email === "N/A" ? "text-muted fst-italic" : ""}>
-                                        {user.email}
-                                    </td>
-                                    <td className={user.phone === "N/A" ? "text-muted fst-italic" : ""}>
-                                        {user.phone}
-                                    </td>
-                                    <td className={user.country === "N/A" ? "text-muted fst-italic" : ""}>
-                                        {user.country}
-                                    </td>
-                                    <td className={user.createdLabel === "Unknown" ? "text-muted fst-italic" : ""}>
-                                        {user.createdLabel}
-                                    </td>
-                                </tr>
+                                <React.Fragment key={user.id}>
+                                    <tr>
+                                        <td>{user.name}</td>
+                                        <td className={user.email === "N/A" ? "text-muted fst-italic" : ""}>
+                                            {user.email}
+                                        </td>
+                                        <td className={user.phone === "N/A" ? "text-muted fst-italic" : ""}>
+                                            {user.phone}
+                                        </td>
+                                        <td className={user.country === "N/A" ? "text-muted fst-italic" : ""}>
+                                            {user.country}
+                                        </td>
+                                        <td className={user.createdLabel === "Unknown" ? "text-muted fst-italic" : ""}>
+                                            {user.createdLabel}
+                                        </td>
+                                    </tr>
+
+                                    {/* FCM Device Tokens Table (if any) */}
+                                    {user.fcmTokens.length > 0 && (
+                                        <tr>
+                                            <td colSpan="5">
+                                                <table className="table table-sm table-striped mb-0">
+                                                    <thead>
+                                                        <tr className="table-light">
+                                                            <th>📱 Platform</th>
+                                                            <th>🔐 Token (truncated)</th>
+                                                            <th>🕒 Last Used</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {user.fcmTokens.map((t, idx) => (
+                                                            <tr key={idx}>
+                                                                <td>{t.platform || "?"}</td>
+                                                                <td>{t.token?.slice(0, 12)}...</td>
+                                                                <td>{t.lastUsed ? new Date(t.lastUsed.seconds * 1000).toLocaleString() : "N/A"}</td>
+                                                            </tr>
+                                                        ))}
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    )}
+                                </React.Fragment>
                             ))
                         ) : (
                             <tr>

@@ -7,6 +7,254 @@ import { db, storage } from "../../firebase/firebaseConfig";
 import i18n from "../../i18n";
 import AvatarCropModal from "../../components/AvatarCropModal";
 import "../../styles/CompleteProfile.css";
+import Select from "react-select";
+import 'react-phone-number-input/style.css';
+import PhoneInput, { isValidPhoneNumber } from 'react-phone-number-input';
+
+
+
+
+const countryOptions = [
+    // 🌍 Western Countries
+    {
+        value: "Canada",
+        label: (
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <img src="https://flagcdn.com/w40/ca.png" alt="CA" width="20" />
+                <span>Canada</span>
+            </div>
+        ),
+    },
+    {
+        value: "United States",
+        label: (
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <img src="https://flagcdn.com/w40/us.png" alt="US" width="20" />
+                <span>United States</span>
+            </div>
+        ),
+    },
+    {
+        value: "Australia",
+        label: (
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <img src="https://flagcdn.com/w40/au.png" alt="AU" width="20" />
+                <span>Australia</span>
+            </div>
+        ),
+    },
+    {
+        value: "United Kingdom",
+        label: (
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <img src="https://flagcdn.com/w40/gb.png" alt="UK" width="20" />
+                <span>United Kingdom</span>
+            </div>
+        ),
+    },
+    {
+        value: "Germany",
+        label: (
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <img src="https://flagcdn.com/w40/de.png" alt="DE" width="20" />
+                <span>Germany</span>
+            </div>
+        ),
+    },
+    {
+        value: "France",
+        label: (
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <img src="https://flagcdn.com/w40/fr.png" alt="FR" width="20" />
+                <span>France</span>
+            </div>
+        ),
+    },
+    {
+        value: "Italy",
+        label: (
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <img src="https://flagcdn.com/w40/it.png" alt="IT" width="20" />
+                <span>Italy</span>
+            </div>
+        ),
+    },
+    {
+        value: "Netherlands",
+        label: (
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <img src="https://flagcdn.com/w40/nl.png" alt="NL" width="20" />
+                <span>Netherlands</span>
+            </div>
+        ),
+    },
+    {
+        value: "Sweden",
+        label: (
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <img src="https://flagcdn.com/w40/se.png" alt="SE" width="20" />
+                <span>Sweden</span>
+            </div>
+        ),
+    },
+    {
+        value: "Spain",
+        label: (
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <img src="https://flagcdn.com/w40/es.png" alt="ES" width="20" />
+                <span>Spain</span>
+            </div>
+        ),
+    },
+
+    // 🇴🇲 Gulf Countries
+    {
+        value: "Saudi Arabia",
+        label: (
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <img src="https://flagcdn.com/w40/sa.png" alt="SA" width="20" />
+                <span>Saudi Arabia</span>
+            </div>
+        ),
+    },
+    {
+        value: "United Arab Emirates",
+        label: (
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <img src="https://flagcdn.com/w40/ae.png" alt="AE" width="20" />
+                <span>United Arab Emirates</span>
+            </div>
+        ),
+    },
+    {
+        value: "Kuwait",
+        label: (
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <img src="https://flagcdn.com/w40/kw.png" alt="KW" width="20" />
+                <span>Kuwait</span>
+            </div>
+        ),
+    },
+    {
+        value: "Qatar",
+        label: (
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <img src="https://flagcdn.com/w40/qa.png" alt="QA" width="20" />
+                <span>Qatar</span>
+            </div>
+        ),
+    },
+    {
+        value: "Bahrain",
+        label: (
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <img src="https://flagcdn.com/w40/bh.png" alt="BH" width="20" />
+                <span>Bahrain</span>
+            </div>
+        ),
+    },
+    {
+        value: "Oman",
+        label: (
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <img src="https://flagcdn.com/w40/om.png" alt="OM" width="20" />
+                <span>Oman</span>
+            </div>
+        ),
+    },
+
+    // 🌍 African Arab Countries
+    {
+        value: "Egypt",
+        label: (
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <img src="https://flagcdn.com/w40/eg.png" alt="EG" width="20" />
+                <span>Egypt</span>
+            </div>
+        ),
+    },
+    {
+        value: "Morocco",
+        label: (
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <img src="https://flagcdn.com/w40/ma.png" alt="MA" width="20" />
+                <span>Morocco</span>
+            </div>
+        ),
+    },
+    {
+        value: "Algeria",
+        label: (
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <img src="https://flagcdn.com/w40/dz.png" alt="DZ" width="20" />
+                <span>Algeria</span>
+            </div>
+        ),
+    },
+    {
+        value: "Tunisia",
+        label: (
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <img src="https://flagcdn.com/w40/tn.png" alt="TN" width="20" />
+                <span>Tunisia</span>
+            </div>
+        ),
+    },
+    {
+        value: "Sudan",
+        label: (
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <img src="https://flagcdn.com/w40/sd.png" alt="SD" width="20" />
+                <span>Sudan</span>
+            </div>
+        ),
+    },
+    {
+        value: "Libya",
+        label: (
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <img src="https://flagcdn.com/w40/ly.png" alt="LY" width="20" />
+                <span>Libya</span>
+            </div>
+        ),
+    },
+    {
+        value: "Mauritania",
+        label: (
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <img src="https://flagcdn.com/w40/mr.png" alt="MR" width="20" />
+                <span>Mauritania</span>
+            </div>
+        ),
+    },
+    {
+        value: "Somalia",
+        label: (
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <img src="https://flagcdn.com/w40/so.png" alt="SO" width="20" />
+                <span>Somalia</span>
+            </div>
+        ),
+    },
+    {
+        value: "Comoros",
+        label: (
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <img src="https://flagcdn.com/w40/km.png" alt="KM" width="20" />
+                <span>Comoros</span>
+            </div>
+        ),
+    },
+    {
+        value: "Djibouti",
+        label: (
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <img src="https://flagcdn.com/w40/dj.png" alt="DJ" width="20" />
+                <span>Djibouti</span>
+            </div>
+        ),
+    },
+];
 
 
 const CompleteProfile = () => {
@@ -105,6 +353,10 @@ const CompleteProfile = () => {
                     avatarUrl
                 },
                 phone: profile.whatsapp,
+                firstName: profile.firstName,
+                lastName: profile.lastName,
+                country: profile.country,
+                age: profile.age,
                 createdAt: serverTimestamp(),
             }, { merge: true });
 
@@ -164,21 +416,41 @@ const CompleteProfile = () => {
 
                     <div className="col-md-6 mb-3">
                         <label>WhatsApp Number</label>
-                        <input name="whatsapp" className="form-control" required value={profile.whatsapp} onChange={handleChange} placeholder="+966..." />
+                        <PhoneInput
+                            international
+                            defaultCountry="SA"
+                            value={profile.whatsapp}
+                            onChange={(value) =>
+                                setProfile({ ...profile, whatsapp: value })
+                            }
+                            className="form-control"
+                            placeholder="Enter your WhatsApp number"
+                        />
+                        {profile.whatsapp && !isValidPhoneNumber(profile.whatsapp) && (
+                            <div className="text-danger mt-1">❌ Invalid phone number</div>
+                        )}
                     </div>
 
                     <div className="col-md-6 mb-3">
                         <label>Country</label>
-                        <select name="country" className="form-select" required value={profile.country} onChange={handleChange}>
-                            <option value="">Select Country</option>
-                            <option value="Saudi Arabia">Saudi Arabia</option>
-                            <option value="Canada">Canada</option>
-                            <option value="Egypt">Egypt</option>
-                            <option value="UAE">UAE</option>
-                            <option value="Kuwait">Kuwait</option>
-                            <option value="United States">United States</option>
-                        </select>
+                        <Select
+                            options={countryOptions}
+                            value={countryOptions.find(opt => opt.value === profile.country)}
+                            onChange={(selected) =>
+                                setProfile({ ...profile, country: selected.value })
+                            }
+                            placeholder="Select Country"
+                            isSearchable
+                            styles={{
+                                control: (base) => ({
+                                    ...base,
+                                    borderRadius: "6px",
+                                    padding: "2px",
+                                }),
+                            }}
+                        />
                     </div>
+
 
                     <div className="col-md-6 mb-3">
                         <label>Age</label>

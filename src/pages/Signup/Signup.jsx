@@ -10,6 +10,11 @@ import {
 import { doc, setDoc, serverTimestamp } from "firebase/firestore";
 import "../../styles/Signup.css";
 
+import { Capacitor } from '@capacitor/core';
+import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
+import { signInWithCredential } from 'firebase/auth';
+
+
 const Signup = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
@@ -63,8 +68,30 @@ const Signup = () => {
         const provider = new GoogleAuthProvider();
 
         try {
-            const result = await signInWithPopup(auth, provider);
-            const user = result.user;
+            let userCredential;
+
+            if (Capacitor.isNativePlatform()) {
+                // ✅ Native app: initialize before signIn
+                await GoogleAuth.initialize({
+                    scopes: ['profile', 'email'], // ✅ REQUIRED for Android
+                    clientId: '687684731229-l6296i32tsdet0nfdgd5olk34hd0o259.apps.googleusercontent.com', // ✅ Your real Web Client ID
+                    forceCodeForRefreshToken: true
+                });
+
+
+                const googleUser = await GoogleAuth.signIn();
+
+                const credential = GoogleAuthProvider.credential(
+                    googleUser.authentication.idToken
+                );
+
+                userCredential = await signInWithCredential(auth, credential);
+            } else {
+                // ✅ Web browser
+                userCredential = await signInWithPopup(auth, provider);
+            }
+
+            const user = userCredential.user;
 
             await setDoc(doc(db, "users", user.uid), {
                 profile: {
@@ -84,10 +111,12 @@ const Signup = () => {
             }
 
         } catch (err) {
-            console.error(err);
+            console.error("Google Signup Error:", err);
             setError("Google Signup Failed.");
         }
     };
+
+
 
     return (
         <div className="container mt-5" style={{ maxWidth: "500px" }}>

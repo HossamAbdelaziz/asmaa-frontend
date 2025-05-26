@@ -8,15 +8,27 @@ import "../styles/TestimonialsCarousel.css";
 function TestimonialsCarousel() {
     const [modalSrc, setModalSrc] = useState(null);
     const currentAudioRef = useRef(null);
+    const sliderRef = useRef(null); // ✅ Reference to control the carousel
+    // ✅ Pause videos on manual swipe
+    const handleBeforeChange = () => {
+        const videos = document.querySelectorAll(".testimonial-video");
+        videos.forEach((video) => {
+            if (!video.paused) {
+                video.pause();
+            }
+        });
+    };
 
     const settings = {
         dots: true,
         infinite: true,
-        speed: 500,
+        speed: 600,
         slidesToShow: 3,
         slidesToScroll: 1,
         autoplay: true,
-        autoplaySpeed: 4000,
+        autoplaySpeed: 8000,
+        pauseOnHover: true,
+        beforeChange: handleBeforeChange, // ✅ Trigger on swipe
         responsive: [
             {
                 breakpoint: 1024,
@@ -33,7 +45,9 @@ function TestimonialsCarousel() {
         ],
     };
 
-    const getFlag = (code) => `https://flagcdn.com/w40/${code.toLowerCase()}.png`;
+
+    const getFlag = (code) =>
+        `https://flagcdn.com/w40/${code.toLowerCase()}.png`;
 
     const handleAudioPlay = (e) => {
         if (currentAudioRef.current && currentAudioRef.current !== e.target) {
@@ -42,10 +56,26 @@ function TestimonialsCarousel() {
         currentAudioRef.current = e.target;
     };
 
+    // ✅ Pause carousel when video plays
+    const handleVideoPlay = () => {
+        if (sliderRef.current) {
+            sliderRef.current.slickPause();
+        }
+    };
+
+
+
+    // ✅ Resume carousel when video ends or is paused
+    const handleVideoEnd = () => {
+        if (sliderRef.current) {
+            sliderRef.current.slickPlay();
+        }
+    };
+
     return (
         <div className="testimonials-carousel-container">
             <h2 className="carousel-title">What Clients Say</h2>
-            <Slider {...settings}>
+            <Slider ref={sliderRef} {...settings}>
                 {testimonials.map((item, index) => (
                     <div key={index} className="testimonial-slide">
                         {item.type === "image" ? (
@@ -64,7 +94,13 @@ function TestimonialsCarousel() {
                                 <video
                                     controls
                                     className="testimonial-video"
-                                    onPlay={handleAudioPlay}
+                                    onPlay={(e) => {
+                                        handleAudioPlay(e);
+                                        handleVideoPlay();
+                                    }}
+                                    onPause={handleVideoEnd}
+                                    onEnded={handleVideoEnd}
+                                    poster={item.poster || "/assets/default-thumbnail.jpg"} // ✅ Custom thumbnail fallback
                                 >
                                     <source src={item.src} type="video/mp4" />
                                     Your browser does not support the video tag.

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "687684731229",
+    "project_id": "coachasmaa-17191",
+    "storage_bucket": "coachasmaa-17191.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:687684731229:android:692a0e15c78cb30f35e8b4",
+        "android_client_info": {
+          "package_name": "com.asmaagad.coachapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "687684731229-l6296i32tsdet0nfdgd5olk34hd0o259.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9EDCRW-0352gPsjRZA0b1W-yiTrNSCvM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "687684731229-l6296i32tsdet0nfdgd5olk34hd0o259.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

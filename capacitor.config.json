@@ -1,0 +1,24 @@
+{
+  "appId": "com.asmaagad.coachapp",
+  "appName": "Coach Asmaa",
+  "webDir": "dist",
+  "bundledWebRuntime": false,
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 3000,
+      "launchAutoHide": true,
+      "androidScaleType": "FIT_CENTER",
+      "splashFullScreen": true,
+      "splashImmersive": true,
+      "androidSplashResourceName": "splash_logo",
+      "backgroundColor": "#1B4332"
+    }
+  },
+  "cordova": {
+    "plugins": {
+      "onesignal-cordova-plugin": {
+        "APP_ID": "4d7c04ee-283b-4cf1-824c-5ea2b35b4232"
+      }
+    }
+  }
+}

@@ -258,6 +258,13 @@
     cursor: pointer;
 }
 
+
+
+
+
+
+
+
 /* =======================
      MOBILE DRAWER STYLES
 =========================== */
@@ -472,4 +479,137 @@
     to {
         opacity: 1;
     }
+}
+
+
+
+/* 🔥 Force fix for drawer buttons in all cases */
+.mobile-drawer .btn-login,
+.mobile-drawer .btn-signup {
+    font-size: 16px !important;
+    padding: 14px 20px !important;
+    height: auto !important;
+    border-radius: 999px !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    text-align: center !important;
+    gap: 8px !important;
+    margin: 12px 0 !important;
+    width: 100% !important;
+    font-weight: 600 !important;
+}
+
+
+/* ✅ Fix logo & brand alignment only on Android */
+body.capacitor-android .main-navbar .brand {
+    align-items: center !important;
+    gap: 10px !important;
+    padding-top: 4px !important;
+}
+
+body.capacitor-android .main-navbar .brand img {
+    height: 60px !important;
+    /* slightly smaller for Android */
+    margin-top: 0 !important;
+    padding: 0 !important;
+}
+
+
+
+
+/* =============================
+🔔 Navbar Icons (Mobile Right Side)
+============================= */
+.navbar-icons {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+@media (max-width: 768px) {
+    .main-navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 16px;
+    }
+
+    .navbar-container {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-grow: 1;
+    }
+
+    .brand {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .brand img {
+        height: 40px;
+        width: auto;
+    }
+
+    .brand span {
+        font-weight: bold;
+        font-size: 1.1rem;
+        white-space: nowrap;
+    }
+
+    .navbar-links,
+    .auth-buttons {
+        display: none !important;
+    }
+
+    .notification-bell-container {
+        position: relative;
+        cursor: pointer;
+    }
+
+    .notification-bell-container .badge {
+        position: absolute;
+        top: -6px;
+        right: -6px;
+        background-color: red;
+        color: white;
+        border-radius: 50%;
+        font-size: 10px;
+        padding: 2px 6px;
+        font-weight: bold;
+        line-height: 1;
+    }
+
+    .hamburger-btn {
+        font-size: 24px;
+        background: none;
+        border: none;
+        padding: 0;
+        margin: 0;
+        color: #333;
+        cursor: pointer;
+    }
+}
+
+.language-toggle {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.language-toggle .lang-icon {
+    padding: 6px 14px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background: #f8f8f8;
+    transition: all 0.2s ease;
+}
+
+.language-toggle .lang-icon:hover {
+    background-color: #e4e4e4;
 }

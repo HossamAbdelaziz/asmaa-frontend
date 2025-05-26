@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Coach Asmaa</string>
+    <string name="title_activity_main">Coach Asmaa</string>
+    <string name="package_name">com.asmaagad.coachapp</string>
+    <string name="custom_url_scheme">com.asmaagad.coachapp</string>
+</resources>

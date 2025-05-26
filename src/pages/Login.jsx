@@ -9,6 +9,11 @@ import { doc, getDoc } from "firebase/firestore";
 import { auth, db } from "../firebase/firebaseConfig";
 import "../styles/Login.css";
 
+import { Capacitor } from '@capacitor/core';
+import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
+import { signInWithCredential } from 'firebase/auth';
+
+
 const Login = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
@@ -58,18 +63,41 @@ const Login = () => {
     };
 
     const handleGoogleLogin = async () => {
+        setError("");
         const provider = new GoogleAuthProvider();
 
         try {
-            const result = await signInWithPopup(auth, provider);
-            await result.user.reload();
+            let userCredential;
 
-            if (!result.user.emailVerified) {
+            if (Capacitor.isNativePlatform()) {
+                // ✅ Native app: initialize first to avoid crash
+                await GoogleAuth.initialize({
+                    scopes: ['profile', 'email'], // ✅ REQUIRED for Android
+                    clientId: '687684731229-l6296i32tsdet0nfdgd5olk34hd0o259.apps.googleusercontent.com', // ✅ Your real Web Client ID
+                    forceCodeForRefreshToken: true
+                });
+
+
+                const googleUser = await GoogleAuth.signIn();
+
+                const credential = GoogleAuthProvider.credential(
+                    googleUser.authentication.idToken
+                );
+
+                userCredential = await signInWithCredential(auth, credential);
+            } else {
+                // ✅ Web browser
+                userCredential = await signInWithPopup(auth, provider);
+            }
+
+            await userCredential.user.reload();
+
+            if (!userCredential.user.emailVerified) {
                 navigate("/signup/verify-email");
                 return;
             }
 
-            const docSnap = await getDoc(doc(db, "users", result.user.uid));
+            const docSnap = await getDoc(doc(db, "users", userCredential.user.uid));
             const profile = docSnap.data()?.profile;
 
             if (
@@ -92,10 +120,12 @@ const Login = () => {
             }
 
         } catch (err) {
-            console.error(err);
+            console.error("Google Login Error:", err);
             setError("Google Login Failed.");
         }
     };
+
+
 
     return (
         <div className="container mt-5" style={{ maxWidth: "500px" }}>
