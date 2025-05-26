@@ -1,0 +1,5 @@
+android/
+ios/
+capacitor.config.*
+**/google-services.json
+package-lock.json
