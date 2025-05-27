@@ -2,7 +2,6 @@
   "appId": "com.asmaagad.coachapp",
   "appName": "Coach Asmaa",
   "webDir": "dist",
-  "bundledWebRuntime": false,
   "plugins": {
     "SplashScreen": {
       "launchShowDuration": 3000,
@@ -12,6 +11,14 @@
       "splashImmersive": true,
       "androidSplashResourceName": "splash_logo",
       "backgroundColor": "#1B4332"
+    },
+    "GoogleAuth": {
+      "scopes": [
+        "profile",
+        "email"
+      ],
+      "serverClientId": "687684731229-l6296i32tsdet0nfdgd5olk34hd0o259.apps.googleusercontent.com",
+      "forceCodeForRefreshToken": true
     }
   },
   "cordova": {
