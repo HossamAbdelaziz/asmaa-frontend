@@ -11,6 +11,8 @@ import {
 import { db } from "../../firebase/firebaseConfig";
 import axios from "axios";
 import moment from "moment-timezone";
+import "../../styles/admin/AdminBookings.css";
+
 
 export default function AdminBookings() {
     // existing state setup
@@ -164,10 +166,11 @@ export default function AdminBookings() {
     });
 
     return (
-        <div className="container mt-4">
+        <div className="admin-bookings">
+
             <h2 className="mb-3">📅 Manage Bookings</h2>
             {/* Filter Controls */}
-            <div className="row g-3 mb-4">
+            <div className="booking-filters">
                 <div className="col-md-4">
                     <label>Status Filter:</label>
                     <select className="form-select" value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebase/firebaseConfig";
+import "../../styles/admin/AdminUsersReport.css";
+
 
 export default function AdminUsersReport() {
     const [users, setUsers] = useState([]);
@@ -57,10 +59,10 @@ export default function AdminUsersReport() {
     const uniqueCountries = ["All", ...new Set(users.map(u => u.country).filter(Boolean))];
 
     return (
-        <div>
+        <div className="admin-users-report">
             <h2 className="mb-4">👥 All Registered Users</h2>
 
-            <div className="d-flex flex-wrap gap-3 mb-3 align-items-center">
+            <div className="user-filter-bar">
                 <input
                     type="text"
                     className="form-control"
@@ -127,26 +129,33 @@ export default function AdminUsersReport() {
                                     {user.fcmTokens.length > 0 && (
                                         <tr>
                                             <td colSpan="5">
-                                                <table className="table table-sm table-striped mb-0">
-                                                    <thead>
-                                                        <tr className="table-light">
-                                                            <th>📱 Platform</th>
-                                                            <th>🔐 Token (truncated)</th>
-                                                            <th>🕒 Last Used</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        {user.fcmTokens.map((t, idx) => (
-                                                            <tr key={idx}>
-                                                                <td>{t.platform || "?"}</td>
-                                                                <td>{t.token?.slice(0, 12)}...</td>
-                                                                <td>{t.lastUsed ? new Date(t.lastUsed.seconds * 1000).toLocaleString() : "N/A"}</td>
+                                                <div className="token-table-wrapper">
+                                                    <table className="table token-table">
+                                                        <thead>
+                                                            <tr className="table-light">
+                                                                <th>📱 Platform</th>
+                                                                <th>🔐 Token (truncated)</th>
+                                                                <th>🕒 Last Used</th>
                                                             </tr>
-                                                        ))}
-                                                    </tbody>
-                                                </table>
+                                                        </thead>
+                                                        <tbody>
+                                                            {user.fcmTokens.map((t, idx) => (
+                                                                <tr key={idx}>
+                                                                    <td>{t.platform || "?"}</td>
+                                                                    <td>{t.token?.slice(0, 12)}...</td>
+                                                                    <td>
+                                                                        {t.lastUsed
+                                                                            ? new Date(t.lastUsed.seconds * 1000).toLocaleString()
+                                                                            : "N/A"}
+                                                                    </td>
+                                                                </tr>
+                                                            ))}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </td>
                                         </tr>
+
                                     )}
                                 </React.Fragment>
                             ))

@@ -57,6 +57,7 @@ import AdminManualNotifications from "./pages/admin/adminNotification/AdminManua
 import AdminDeleteSubscriptions from "./pages/admin/AdminDeleteSubscriptions";
 import AdminSendNotification from "./pages/admin/adminNotification/AdminSendNotification";
 
+
 function App() {
   useEffect(() => {
     if (Capacitor.isNativePlatform()) {
@@ -120,9 +121,13 @@ function App() {
               }
             >
               <Route index element={<AdminDashboard />} />
-              <Route path="users" element={<AdminUsersReport />} />
+              <Route path="users-report" element={<AdminUsersReport />} />
+              <Route path="set-availability" element={<AdminSetAvailability />} />
+
+
+
               <Route path="add-user" element={<AdminAddUser />} />
-              <Route path="edit-subscription" element={<AdminEditSubscription />} />
+              <Route path="edit-subscriptions" element={<AdminEditSubscription />} />
               <Route path="add-weeks-sessions" element={<AdminAddWeeksSessions />} />
               <Route path="bookings" element={<AdminBookings />} />
               <Route path="availability" element={<AdminSetAvailability />} />

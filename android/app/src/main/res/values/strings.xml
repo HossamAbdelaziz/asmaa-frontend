@@ -2,8 +2,8 @@
 <resources>
     <string name="app_name">Coach Asmaa</string>
     <string name="title_activity_main">Coach Asmaa</string>
-    <string name="package_name">com.asmaagad.coachapp</string>
-    <string name="custom_url_scheme">com.asmaagad.coachapp</string>
+    <string name="package_name">com.northviatech.coachasmaa</string>
+    <string name="custom_url_scheme">com.northviatech.coachasmaa</string>
     <string name="server_client_id">687684731229-l6296i32tsdet0nfdgd5olk34hd0o259.apps.googleusercontent.com</string>
 
 </resources>

@@ -9,6 +9,8 @@ import { db } from "../firebase/firebaseConfig";
 import "../styles/components/Navbar.css";
 import { useTranslation } from "react-i18next";
 import NotificationBell from '../components/NotificationBell'; // adjust path if needed
+import { useAdmin } from '../context/AdminContext';
+
 
 const Navbar = () => {
     const { t, i18n } = useTranslation();
@@ -129,6 +131,13 @@ const Navbar = () => {
                                         <Link to="/dashboard" className="dropdown-item" onClick={() => setDropdownOpen(false)}>
                                             <i className="fas fa-tachometer-alt me-2" /> Dashboard
                                         </Link>
+
+                                        {isAdmin && (
+                                            <Link to="/admin" className="dropdown-item" onClick={() => setDropdownOpen(false)}>
+                                                <i className="fas fa-user-shield me-2" /> Admin Panel
+                                            </Link>
+                                        )}
+
                                         <Link to="/profile" className="dropdown-item" onClick={() => setDropdownOpen(false)}>
                                             <i className="fas fa-user me-2" /> Profile
                                         </Link>
@@ -137,6 +146,7 @@ const Navbar = () => {
                                         </button>
                                     </div>
                                 )}
+
                             </div>
                         )}
                     </div>

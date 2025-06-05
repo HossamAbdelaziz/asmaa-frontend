@@ -1,4 +1,4 @@
-package com.asmaagad.coachapp;
+package com.northviatech.coachasmaa;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;

@@ -2,11 +2,11 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android' // ✅ Needed for kotlinOptions
 
 android {
-    namespace "com.asmaagad.coachapp"
+    namespace "com.northviatech.coachasmaa"
     compileSdk rootProject.ext.compileSdkVersion
 
     defaultConfig {
-        applicationId "com.asmaagad.coachapp"
+        applicationId "com.northviatech.coachasmaa"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
