@@ -192,6 +192,7 @@
 
     .hamburger {
         display: flex;
+        margin-top: 80px;
     }
 
     .admin-sidebar {
@@ -208,3 +209,4 @@
         transition: transform 0.3s ease;
     }
 }
+

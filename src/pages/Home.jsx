@@ -13,8 +13,9 @@ function Home() {
     const { t, i18n } = useTranslation();
 
     return (
-        <div className="container mt-5 home-container">
-            <div className="row align-items-center">
+    <div className="home-wrapper">
+        <div className="container home-container">
+                <div className="row align-items-center">
                 {/* Left: Hero Text */}
                 <div className="col-md-6 home-hero-text">
                     <h1 className="display-4 fw-bold">{t("home.title")}</h1>
@@ -72,7 +73,9 @@ function Home() {
             <TestimonialsCarousel />
 
         </div>
-    );
+        </div>
+
+);
 }
 
 export default Home;

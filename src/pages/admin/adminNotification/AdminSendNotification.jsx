@@ -53,8 +53,7 @@ const AdminSendNotification = () => {
         }
 
         try {
-            const response = await axios.post('http://localhost:5001/api/admin/send-notification', payload);
-            if (response.data.success) {
+            await axios.post('https://asmaa-backend.onrender.com/api/admin/send-notification', payload);            if (response.data.success) {
                 setStatus('✅ Notification sent!');
                 setTitle('');
                 setBody('');

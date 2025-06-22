@@ -4,14 +4,13 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import { AdminProvider } from "./context/AdminContext";
 import RequireAdmin from "./utils/RequireAdmin";
-import ProtectedRoute from "./utils/ProtectedRoute"; // ✅ NEW
+import ProtectedRoute from "./utils/ProtectedRoute";
 import ScrollToTop from "./components/ScrollToTop";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Analytics } from "@vercel/analytics/react";
 import { Capacitor } from '@capacitor/core';
-import '@codetrix-studio/capacitor-google-auth';
-import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
+import SafeAreaWrapper from './components/SafeAreaWrapper';
 
 import './index.css';
 import './styles/Footer.css';
@@ -21,8 +20,8 @@ import './styles/app-mobile.css';
 import Layout from "./components/Layout";
 import AdminLayout from "./pages/admin/AdminLayout";
 
-// Firebase push listener
-import FCMInitializer from "./components/FCMInitializer";
+// Firebase push (native) listener
+import { initNativeFCM } from "./firebase/firebaseNative";
 
 // Public/User Pages
 import Home from "./pages/Home";
@@ -57,30 +56,42 @@ import AdminManualNotifications from "./pages/admin/adminNotification/AdminManua
 import AdminDeleteSubscriptions from "./pages/admin/AdminDeleteSubscriptions";
 import AdminSendNotification from "./pages/admin/adminNotification/AdminSendNotification";
 
-
 function App() {
+  const [platform, setPlatform] = React.useState('web');
+
   useEffect(() => {
+    const detectedPlatform = Capacitor.getPlatform();
+    setPlatform(detectedPlatform); // ✅ Save it in state so JSX can access it
+
     if (Capacitor.isNativePlatform()) {
       document.body.classList.add('capacitor');
 
-      // ✅ Initialize GoogleAuth plugin
-      GoogleAuth.init({
-        clientId: '687684731229-l6296i32tsdet0nfdgd5olk34hd0o259.apps.googleusercontent.com',
-        scopes: ['profile', 'email'],
-        grantOfflineAccess: true,
-      });
+      if (detectedPlatform === 'ios') {
+        document.body.classList.add('capacitor-ios');
+      } else if (detectedPlatform === 'android') {
+        document.body.classList.add('capacitor-android');
+      }
+
+      initNativeFCM();
     } else {
       document.body.classList.remove('capacitor');
+      import('@codetrix-studio/capacitor-google-auth').then(({ GoogleAuth }) => {
+        GoogleAuth.initialize({
+          clientId: '687684731229-l6296i32tsdet0nfdgd5olk34hd0o259.apps.googleusercontent.com',
+          scopes: ['profile', 'email'],
+          forceCodeForRefreshToken: true,
+        });
+      });
     }
   }, []);
 
   return (
     <AuthProvider>
       <AdminProvider>
+            <SafeAreaWrapper>
+
         <Router>
           <ScrollToTop />
-          <FCMInitializer />
-
           <Routes>
             {/* === PUBLIC + USER ROUTES === */}
             <Route element={<Layout />}>
@@ -123,9 +134,6 @@ function App() {
               <Route index element={<AdminDashboard />} />
               <Route path="users-report" element={<AdminUsersReport />} />
               <Route path="set-availability" element={<AdminSetAvailability />} />
-
-
-
               <Route path="add-user" element={<AdminAddUser />} />
               <Route path="edit-subscriptions" element={<AdminEditSubscription />} />
               <Route path="add-weeks-sessions" element={<AdminAddWeeksSessions />} />
@@ -139,20 +147,22 @@ function App() {
             </Route>
           </Routes>
         </Router>
-      </AdminProvider>
 
-      <Analytics />
-      <ToastContainer
-        position="top-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={true}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
+        <Analytics />
+        <ToastContainer
+          position="top-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
+              </SafeAreaWrapper>
+
+      </AdminProvider>
     </AuthProvider>
   );
 }

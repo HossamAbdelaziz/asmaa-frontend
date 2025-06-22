@@ -5,7 +5,7 @@ body {
 
 /* 🏠 Home Page Container */
 .home-container {
-    padding-top: 40px;
+    padding-top: 1.5rem;
     padding-bottom: 80px;
 }
 
@@ -79,9 +79,13 @@ body.lang-en .home-hero-text p {
     }
 
     .home-container {
-        padding-top: 0px;
-        padding-bottom: 30px;
-    }
+    padding-top: 1.5rem;
+    padding-bottom: 30px;
+  }
+
+  body.capacitor-ios .home-container {
+    padding-top: calc(env(safe-area-inset-top) + 1.5rem);
+  }
 
     .home-container .row {
         gap: 15px;
@@ -219,4 +223,39 @@ body.lang-ar .about-coach-section p {
 body.lang-ar .about-coach-section .button {
     text-align: right !important;
     direction: rtl !important;
+}
+
+
+
+
+/* 🔧 Reset all gaps */
+.home-wrapper {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.home-container {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+/* ✅ Apply custom top spacing after Navbar */
+body .home-container {
+  padding-top: 1.5rem;
+}
+
+/* ✅ Add iOS safe area top spacing */
+body.capacitor-ios .home-container {
+  padding-top: calc(env(safe-area-inset-top, 0px) + 1.5rem);
+}
+
+/* ✅ Prevent mobile from overriding this */
+@media (max-width: 768px) {
+  body .home-container {
+    padding-top: 1.5rem !important;
+  }
+
+  body.capacitor-ios .home-container {
+    padding-top: calc(env(safe-area-inset-top, 0px) + 1.5rem) !important;
+  }
 }

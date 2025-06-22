@@ -291,6 +291,8 @@
         "welcome": "مرحبًا بعودتك",
         "dailyMotivation": "تحفيز يومي",
         "appName": "تطبيق أسماء",
+        "currentWeek": "الأسبوع الحالي",
+        "sessionsUsed": "الجلسات المستخدمة",
         "noProgram": {
             "title": "لا يوجد برنامج نشط",
             "description": "أنت غير مشترك حاليًا في أي برنامج."

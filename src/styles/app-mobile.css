@@ -226,3 +226,28 @@
         font-size: 1.1rem !important;
     }
 }
+
+/* Real Safe Top Spacer Fix for iOS */
+body.capacitor-ios .ios-safe-area-fix {
+  height: env(safe-area-inset-top);
+  background-color: #fdfaf7; /* Match your navbar background */
+  width: 100%;
+  position: relative;
+  z-index: 999;
+}
+
+/* Force iOS body padding if needed */
+body.capacitor-ios {
+  padding-top: env(safe-area-inset-top);
+}
+
+body.capacitor-ios .ios-safe-area-fix {
+  background-color: #ffcc00;
+}
+
+.hamburger {
+  position: fixed !important;
+  top: calc(env(safe-area-inset-top, 0px) + 20px) !important;
+  left: 16px !important;
+  z-index: 99999 !important;
+}

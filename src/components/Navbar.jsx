@@ -15,6 +15,21 @@ import { useAdmin } from '../context/AdminContext';
 const Navbar = () => {
     const { t, i18n } = useTranslation();
     const { currentUser, userProfile, loading, avatarUrl, isAdmin } = useAuth();
+
+
+    console.log("🔍 Navbar STATE:");
+console.log("currentUser:", currentUser);
+console.log("loading:", loading);
+console.log("userProfile:", userProfile);
+console.log("avatarUrl:", avatarUrl);
+console.log("isAdmin:", isAdmin);
+
+
+    useEffect(() => {
+  console.log("📱 Platform:", Capacitor.getPlatform());
+  console.log("👤 currentUser:", currentUser);
+  console.log("🔄 loading:", loading);
+}, [currentUser, loading]);
     const profileName =
         userProfile?.profile?.firstName || userProfile?.firstName || "User";
 

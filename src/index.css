@@ -237,3 +237,20 @@ body {
   overflow-x: hidden;
   /* ✅ This prevents horizontal scroll globally */
 }
+
+
+/* iOS Safe Area Top Padding Fix */
+body.capacitor-ios .ios-safe-area-fix {
+  height: env(safe-area-inset-top);
+  background-color: #fdfaf7; /* match your navbar background */
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+/* Push the entire app down by the safe area height */
+body.capacitor-ios #root {
+  padding-top: env(safe-area-inset-top);
+}

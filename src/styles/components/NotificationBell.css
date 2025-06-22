@@ -32,19 +32,22 @@
 📩 Dropdown Panel
 ====================== */
 .dropdown.notif-dropdown {
-    position: absolute;
-    top: 40px;
-    right: 0;
-    width: 350px;
-    max-width: 95vw;
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-    z-index: 9999;
-    overflow: hidden;
-    border: 1px solid #e0e0e0;
+  position: absolute;
+  top: calc(40px + env(safe-area-inset-top)); /* ✅ iOS notch-safe */
+  right: 0;
+  width: 350px;
+  max-width: 95vw;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  z-index: 9999;
+  overflow: hidden;
+  border: 1px solid #e0e0e0;
 }
-
+/* ✅ iOS override: adds notch-safe spacing */
+body.capacitor-ios .dropdown.notif-dropdown {
+  top: calc(40px + env(safe-area-inset-top));
+}
 .dropdown-header {
     font-weight: 600;
     font-size: 1.1rem;
@@ -234,4 +237,19 @@
     word-break: break-word;
     max-width: 220px;
     /* or 100% if you’re in a flexbox */
+}
+
+/* 🧠 Overlay to prevent clipping and respect iOS safe area */
+.dropdown-overlay {
+  position: fixed;
+  top: calc(env(safe-area-inset-top, 0px) + 48px);
+  right: 8px;
+  z-index: 9999;
+  display: flex;
+  justify-content: flex-end;
+  pointer-events: none;
+}
+
+.dropdown.notif-dropdown {
+  pointer-events: all;
 }

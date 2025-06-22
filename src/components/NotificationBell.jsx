@@ -11,8 +11,7 @@ import {
 import { db } from '../firebase/firebaseConfig';
 import { useAuth } from '../context/AuthContext';
 import '../styles/components/NotificationBell.css';
-import { BsBell } from 'react-icons/bs'; // or HiOutlineBell, MdNotificationsNone
-
+import { BsBell } from 'react-icons/bs';
 
 const NotificationBell = () => {
     const { currentUser } = useAuth();
@@ -21,7 +20,6 @@ const NotificationBell = () => {
     const [expandedId, setExpandedId] = useState(null);
     const dropdownRef = useRef();
 
-    // 🔁 Real-time notification fetch
     useEffect(() => {
         if (!currentUser?.uid) return;
 
@@ -40,7 +38,6 @@ const NotificationBell = () => {
         return () => unsubscribe();
     }, [currentUser]);
 
-    // ✅ Count unseen
     const unseenCount = notifications.filter(notif =>
         notif.delivery?.some(entry => entry.uid === currentUser?.uid && !entry.seen)
     ).length;
@@ -63,28 +60,6 @@ const NotificationBell = () => {
                 delivery: updatedDelivery
             });
         }
-    };
-
-    const handleNotificationClick = async (notif) => {
-        if (!currentUser?.uid) return;
-
-        const updatedDelivery = notif.delivery.map(entry =>
-            entry.uid === currentUser.uid
-                ? {
-                    ...entry,
-                    clicked: true,
-                    clickedAt: new Date(),
-                    seen: true,
-                    seenAt: new Date()
-                }
-                : entry
-        );
-
-        await updateDoc(doc(db, 'notifications', notif.id), {
-            delivery: updatedDelivery
-        });
-
-        setExpandedId(expandedId === notif.id ? null : notif.id);
     };
 
     useEffect(() => {
@@ -113,86 +88,85 @@ const NotificationBell = () => {
                 )}
             </div>
 
-
             {currentUser && dropdownOpen && (
-                <div className="dropdown notif-dropdown">
-                    <h4 className="dropdown-header">Notifications</h4>
+                <div className="dropdown-overlay">
+                    <div className="dropdown notif-dropdown">
+                        <h4 className="dropdown-header">Notifications</h4>
 
-                    <div className="notif-scroll">
-                        {notifications.slice(0, 5).map((notif) => {
-                            const userEntry = notif.delivery?.find(entry => entry.uid === currentUser?.uid);
-                            const isUnread = userEntry && !userEntry.seen;
+                        <div className="notif-scroll">
+                            {notifications.slice(0, 5).map((notif) => {
+                                const userEntry = notif.delivery?.find(entry => entry.uid === currentUser?.uid);
+                                const isUnread = userEntry && !userEntry.seen;
 
-                            return (
-                                <div
-                                    key={notif.id}
-                                    className={`dropdown-item ${isUnread ? 'unread' : ''}`}
-                                    onClick={async () => {
-                                        const updatedDelivery = notif.delivery.map(entry =>
-                                            entry.uid === currentUser.uid
-                                                ? {
-                                                    ...entry,
-                                                    clicked: true,
-                                                    clickedAt: new Date(),
-                                                    seen: true,
-                                                    seenAt: new Date()
-                                                }
-                                                : entry
-                                        );
+                                return (
+                                    <div
+                                        key={notif.id}
+                                        className={`dropdown-item ${isUnread ? 'unread' : ''}`}
+                                        onClick={async () => {
+                                            const updatedDelivery = notif.delivery.map(entry =>
+                                                entry.uid === currentUser.uid
+                                                    ? {
+                                                        ...entry,
+                                                        clicked: true,
+                                                        clickedAt: new Date(),
+                                                        seen: true,
+                                                        seenAt: new Date()
+                                                    }
+                                                    : entry
+                                            );
 
-                                        await updateDoc(doc(db, 'notifications', notif.id), {
-                                            delivery: updatedDelivery
-                                        });
+                                            await updateDoc(doc(db, 'notifications', notif.id), {
+                                                delivery: updatedDelivery
+                                            });
 
-                                        // 🔁 Navigate to full detail page
-                                        window.location.href = `/notifications/${notif.id}`;
-                                    }}
-                                >
-                                    {notif.imageUrl && (
-                                        <img
-                                            src={notif.imageUrl}
-                                            alt="preview"
-                                            className="notif-thumbnail"
-                                        />
-                                    )}
+                                            window.location.href = `/notifications/${notif.id}`;
+                                        }}
+                                    >
+                                        {notif.imageUrl && (
+                                            <img
+                                                src={notif.imageUrl}
+                                                alt="preview"
+                                                className="notif-thumbnail"
+                                            />
+                                        )}
 
-                                    <div className="notif-content">
-                                        <div className="notif-header">
-                                            <span className="notif-title">{notif.title}</span>
-                                            {isUnread && <span className="unread-dot" />}
-                                        </div>
+                                        <div className="notif-content">
+                                            <div className="notif-header">
+                                                <span className="notif-title">{notif.title}</span>
+                                                {isUnread && <span className="unread-dot" />}
+                                            </div>
 
-                                        <div className="notif-snippet">
-                                            {notif.body?.slice(0, 80)}
-                                            {notif.body?.length > 80 ? "…" : ""}
-                                        </div>
+                                            <div className="notif-snippet">
+                                                {notif.body?.slice(0, 80)}
+                                                {notif.body?.length > 80 ? "…" : ""}
+                                            </div>
 
-                                        <div className="notif-time">
-                                            {notif.createdAt?.seconds
-                                                ? new Date(notif.createdAt.seconds * 1000).toLocaleString()
-                                                : 'Now'}
+                                            <div className="notif-time">
+                                                {notif.createdAt?.seconds
+                                                    ? new Date(notif.createdAt.seconds * 1000).toLocaleString()
+                                                    : 'Now'}
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            );
-                        })}
+                                );
+                            })}
 
-                        {notifications.length === 0 && (
-                            <div className="dropdown-item">No notifications yet.</div>
-                        )}
-                    </div>
+                            {notifications.length === 0 && (
+                                <div className="dropdown-item">No notifications yet.</div>
+                            )}
+                        </div>
 
-                    <div className="see-all-btn-wrapper">
-                        <button
-                            className="see-all-btn"
-                            onClick={() => window.location.href = '/notifications'}
-                        >
-                            See all notifications →
-                        </button>
+                        <div className="see-all-btn-wrapper">
+                            <button
+                                className="see-all-btn"
+                                onClick={() => window.location.href = '/notifications'}
+                            >
+                                See all notifications →
+                            </button>
+                        </div>
                     </div>
                 </div>
             )}
-
         </div>
     );
 };

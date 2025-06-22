@@ -37,18 +37,16 @@ const AdminLayout = () => {
 
     return (
         <div className="admin-layout">
-            {/* Hamburger: visible only when sidebar is closed */}
-            {!isSidebarOpen && (
-                <button
-                    className="hamburger"
-                    onClick={() => setSidebarOpen(true)}
-                    aria-label="Open sidebar"
-                >
+                            {/* Hamburger: visible only when sidebar is closed */}
+                            {!isSidebarOpen && (
+                <div className="hamburger-wrapper">
+                    <button className="hamburger" onClick={() => setSidebarOpen(true)} aria-label="Open sidebar">
                     <div className="bar"></div>
                     <div className="bar"></div>
                     <div className="bar"></div>
-                </button>
-            )}
+                    </button>
+                </div>
+                )}
 
 
             <aside

@@ -284,6 +284,8 @@
         "welcome": "Welcome back",
         "dailyMotivation": "Daily Motivation",
         "appName": "Coach Asmaa",
+        "currentWeek": "Current Week",
+        "sessionsUsed": "Sessions Used",
         "noProgram": {
             "title": "No Active Program",
             "description": "You are not currently enrolled in a program."
