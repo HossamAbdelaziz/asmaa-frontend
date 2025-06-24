@@ -29,17 +29,18 @@ export const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      console.log("🔥 onAuthStateChanged fired:", user);
-      setLoading(true);
-      setCurrentUser(user);
+  const unsubscribe = onAuthStateChanged(auth, async (user) => {
+    console.log("🔥 onAuthStateChanged fired:", user);
+    setLoading(true);
+    setCurrentUser(user);
 
-      if (user) {
-        console.log("✅ Auth: Logged in:", user.uid);
+    if (user) {
+      console.log("✅ Auth: Logged in:", user.uid);
 
-        const userDoc = doc(db, "users", user.uid);
+      // 🔍 Check user profile
+      const userDoc = doc(db, "users", user.uid);
+      try {
         const userSnap = await getDoc(userDoc);
-
         if (userSnap.exists()) {
           const data = userSnap.data();
           setUserProfile(data);
@@ -47,64 +48,79 @@ export const AuthProvider = ({ children }) => {
           const avatar = data.avatarUrl || data.profile?.avatarUrl || "/assets/avatars/avatar-default.png";
           setAvatarUrl(avatar);
         } else {
+          console.warn("⚠️ No user profile found in Firestore.");
           setUserProfile(null);
           setAvatarUrl("/assets/avatars/avatar-default.png");
         }
-
-        // 🔐 Admin check
-        const adminDoc = doc(db, "admins", user.uid);
-        const adminSnap = await getDoc(adminDoc);
-        setIsAdmin(adminSnap.exists());
-
-        // ✅ Native FCM Token (skip iOS to avoid APNS error)
-        const platform = Capacitor.getPlatform();
-        if (Capacitor.isNativePlatform() && platform !== "ios") {
-          try {
-            const perm = await FirebaseMessaging.requestPermissions();
-            if (perm.receive === "granted") {
-              const tokenResult = await FirebaseMessaging.getToken();
-              const token = tokenResult?.token;
-              console.log("🔐 FCM token:", token || "❌ Not received");
-
-              if (token) {
-                const existingTokens = userSnap.data()?.messaging?.fcmTokens || [];
-                const alreadyExists = existingTokens.some(t => t.token === token);
-                if (!alreadyExists) {
-                  await setDoc(userDoc, {
-                    messaging: {
-                      fcmTokens: arrayUnion({
-                        token,
-                        platform,
-                        lastUsed: new Date(),
-                        isActive: true,
-                      }),
-                      updatedAt: new Date(),
-                    }
-                  }, { merge: true });
-                  console.log("✅ FCM token saved to Firestore.");
-                }
-              }
-            } else {
-              console.warn("❌ Notification permission denied.");
-            }
-          } catch (err) {
-            console.error("🔥 Native FCM error:", err);
-          }
-        } else {
-          console.log("📱 Skipping FCM (iOS or web)");
-        }
-      } else {
-        console.log("⛔ No user logged in.");
+      } catch (err) {
+        console.error("🔥 Error fetching user profile:", err.message);
         setUserProfile(null);
         setAvatarUrl("/assets/avatars/avatar-default.png");
+      }
+
+      // 🔐 Check if user is admin
+      const adminDoc = doc(db, "admins", user.uid);
+      try {
+        const adminSnap = await getDoc(adminDoc);
+        setIsAdmin(adminSnap.exists());
+        console.log(adminSnap.exists() ? "✅ User is admin" : "❌ User is not admin");
+      } catch (err) {
+        console.error("🔥 Error checking admin status:", err.message);
         setIsAdmin(false);
       }
 
-      setLoading(false);
-    });
+      // 🔔 FCM (if on native + not iOS)
+      const platform = Capacitor.getPlatform();
+      if (Capacitor.isNativePlatform() && platform !== "ios") {
+        try {
+          const perm = await FirebaseMessaging.requestPermissions();
+          if (perm.receive === "granted") {
+            const tokenResult = await FirebaseMessaging.getToken();
+            const token = tokenResult?.token;
+            console.log("🔐 FCM token:", token || "❌ Not received");
 
-    return () => unsubscribe();
-  }, []);
+            if (token) {
+              const userSnap = await getDoc(userDoc);
+              const existingTokens = userSnap.data()?.messaging?.fcmTokens || [];
+              const alreadyExists = existingTokens.some(t => t.token === token);
+
+              if (!alreadyExists) {
+                await setDoc(userDoc, {
+                  messaging: {
+                    fcmTokens: arrayUnion({
+                      token,
+                      platform,
+                      lastUsed: new Date(),
+                      isActive: true,
+                    }),
+                    updatedAt: new Date(),
+                  }
+                }, { merge: true });
+                console.log("✅ FCM token saved to Firestore.");
+              }
+            }
+          } else {
+            console.warn("❌ Notification permission denied.");
+          }
+        } catch (err) {
+          console.error("🔥 Native FCM error:", err);
+        }
+      } else {
+        console.log("📱 Skipping FCM (iOS or web)");
+      }
+
+    } else {
+      console.log("⛔ No user logged in.");
+      setUserProfile(null);
+      setAvatarUrl("/assets/avatars/avatar-default.png");
+      setIsAdmin(false);
+    }
+
+    setLoading(false);
+  });
+
+  return () => unsubscribe();
+}, []);
 
   const isProfileComplete = () => {
     if (!userProfile) return false;

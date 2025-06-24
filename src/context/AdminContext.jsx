@@ -10,19 +10,36 @@ export const AdminProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, async (user) => {
-            if (user) {
-                const docRef = doc(db, "admins", user.uid);
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+        console.log("🧠 AdminContext: Auth state changed", user);
+
+        if (user) {
+            const docRef = doc(db, "admins", user.uid);
+            console.log("🔍 Checking admin record for UID:", user.uid);
+
+            try {
                 const snap = await getDoc(docRef);
-                setIsAdmin(snap.exists());
-            } else {
+                if (snap.exists()) {
+                    console.log("✅ Admin record found.");
+                    setIsAdmin(true);
+                } else {
+                    console.warn("❌ No admin record found.");
+                    setIsAdmin(false);
+                }
+            } catch (error) {
+                console.error("🔥 Error reading admin document:", error);
                 setIsAdmin(false);
             }
-            setLoading(false);
-        });
+        } else {
+            console.log("🚫 No user logged in.");
+            setIsAdmin(false);
+        }
 
-        return () => unsubscribe();
-    }, []);
+        setLoading(false);
+    });
+
+    return () => unsubscribe();
+}, []);
 
     return (
         <AdminContext.Provider value={{ isAdmin, loading }}>
