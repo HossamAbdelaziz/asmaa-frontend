@@ -7,6 +7,7 @@ import { arrayUnion } from "firebase/firestore";
 
 import { Capacitor } from "@capacitor/core";
 import { FirebaseMessaging } from "@capacitor-firebase/messaging";
+import { setupFirebaseMessaging as setupWebFCM } from '../utils/setupFirebaseMessaging';
 
 const AuthContext = createContext();
 
@@ -106,8 +107,16 @@ export const AuthProvider = ({ children }) => {
           console.error("🔥 Native FCM error:", err);
         }
       } else {
-        console.log("📱 Skipping FCM (iOS or web)");
-      }
+if (platform === 'web') {
+  console.log("🌐 Web platform detected. Setting up FCM...");
+  try {
+    await setupWebFCM(); // calls your token save function for web
+  } catch (err) {
+    console.error("🌐 Web FCM setup failed:", err.message);
+  }
+} else {
+  console.log("📱 Skipping FCM (iOS or unsupported)");
+}      }
 
     } else {
       console.log("⛔ No user logged in.");

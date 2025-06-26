@@ -1,80 +1,71 @@
-import { Capacitor } from '@capacitor/core';
 import { FirebaseMessaging } from '@capacitor-firebase/messaging';
-import { getMessaging, getToken, onMessage } from 'firebase/messaging';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { db } from '../firebase/firebaseConfig';
+import { Capacitor } from '@capacitor/core';
+import { getMessaging, getToken } from 'firebase/messaging';
 import { getApp } from 'firebase/app';
 
-// ✅ Web VAPID Key (safe to expose)
-const webVapidKey = "BFmXUcLHuLyRYN6WtpnCRvREbYJ06rpPJJR7rugpVeOp8N-izcdh7LOq9hP-TeIYNlW7P4GsIpBYQp9v5kqZd-g";
+const vapidKey = import.meta.env.VITE_FIREBASE_VAPID_KEY;
 
-export const setupFirebaseMessaging = async (navigate) => {
-    try {
-        console.log("🚀 useFCM: Starting FCM setup...");
+export const setupFirebaseMessaging = async () => {
+  console.log("📡 setupFirebaseMessaging() CALLED");
 
-        if (Capacitor.isNativePlatform()) {
-            // ✅ Native app: Capacitor FCM
-            const permStatus = await FirebaseMessaging.requestPermissions();
-            console.log("📲 Native FCM Permission status:", permStatus);
+  try {
+    const platform = Capacitor.getPlatform();
+    const isNative = Capacitor.isNativePlatform();
 
-            if (permStatus.receive !== 'granted') {
-                console.warn('❌ Native FCM permission not granted');
-                return;
-            }
+    let token;
 
-            const result = await FirebaseMessaging.getToken();
-            const token = result?.token;
-            console.log("🔐 Native FCM Token:", token || "⚠️ null");
+    if (isNative && platform !== 'ios') {
+      const permStatus = await FirebaseMessaging.requestPermissions();
+      console.log("📲 Native FCM Permission status:", permStatus);
 
-            if (token) localStorage.setItem("fcmToken", token);
+      if (permStatus.receive !== 'granted') {
+        console.warn('❌ Native permission not granted');
+        return;
+      }
 
-            // ✅ Native: Handle foreground notification (if needed)
-            FirebaseMessaging.addListener('notificationReceived', (event) => {
-                console.log('📩 Native foreground notification:', event);
-                // You could later show a Toast, Alert, or Local Notification here if desired
-            });
+      const tokenResult = await FirebaseMessaging.getToken();
+      token = tokenResult?.token;
+      console.log("🔐 Native FCM Token:", token);
+    } else {
+      console.log("🌐 Web platform detected. Setting up FCM...");
+      const permission = await Notification.requestPermission();
+      if (permission !== 'granted') {
+        console.warn('❌ Web permission denied');
+        return;
+      }
 
-            FirebaseMessaging.addListener('notificationActionPerformed', (event) => {
-                console.log('👉 Native notification tapped:', event);
-                const notifId = event.notification?.data?.notifId;
-                if (notifId) navigate(`/notifications/${notifId}`);
-            });
-
-        } else {
-            // ✅ Web browser
-            console.log("🌐 Setting up FCM for web...");
-
-            const permission = await Notification.requestPermission();
-            console.log("🔐 Web Notification Permission:", permission);
-
-            if (permission !== 'granted') {
-                console.warn('❌ Web notifications not allowed');
-                return;
-            }
-
-            const app = getApp();
-            const messaging = getMessaging(app);
-
-            const token = await getToken(messaging, {
-                vapidKey: webVapidKey
-            });
-
-            console.log("🔐 Web FCM Token:", token || "⚠️ null");
-            if (token) localStorage.setItem("fcmToken", token);
-
-            // ✅ Web: Show system notification when app is open
-            onMessage(messaging, (payload) => {
-                console.log("📩 Web foreground message:", payload);
-
-                const { title, body } = payload.notification || {};
-                if (title && body && Notification.permission === 'granted') {
-                    new Notification(title, {
-                        body,
-                        icon: '/logo192.png' // Optional: fallback icon
-                    });
-                }
-            });
-        }
-
-    } catch (error) {
-        console.error("🔥 FCM setup error:", error.message || error);
+      const messaging = getMessaging(getApp());
+      token = await getToken(messaging, { vapidKey });
+      console.log("🔐 Web FCM Token:", token);
     }
+
+    if (!token) return;
+
+    // Save to Firestore
+    onAuthStateChanged(getAuth(), async (user) => {
+      if (!user) return;
+      const userRef = doc(db, 'users', user.uid);
+      const snap = await getDoc(userRef);
+      const existing = snap.exists() ? snap.data()?.messaging?.fcmTokens || [] : [];
+
+      if (!existing.includes(token)) {
+        await setDoc(userRef, {
+          messaging: {
+            fcmTokens: [...existing, token],
+            updatedAt: new Date()
+          }
+        }, { merge: true });
+
+        console.log("✅ FCM token saved to Firestore");
+      } else {
+        console.log("ℹ️ Token already exists");
+      }
+    });
+
+  } catch (error) {
+    console.error("🔥 FCM setup error:", error);
+  }
 };
