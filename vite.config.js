@@ -1,11 +1,17 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import { resolve } from 'path';
 
-// https://vitejs.dev/config/
+// Detect if we're running inside Capacitor (for mobile)
+const isCapacitor = process.env.CAPACITOR === 'true';
+
 export default defineConfig({
-  base: './', // ✅ Crucial for Capacitor iOS WebView to load assets correctly
+  base: isCapacitor ? './' : '/', // ✅ Use './' for Capacitor, '/' for web (like Vercel)
   plugins: [react()],
   server: {
-    historyApiFallback: true, // ✅ Fix: Allows direct URL access in SPA routing
+    // ✅ Optional: For local development fallback
+    fs: {
+      allow: [resolve(__dirname)],
+    },
   },
 });
