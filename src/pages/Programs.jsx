@@ -2,6 +2,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom"; // ✅ Needed for navigation
+import { getCurrencyDisplay } from "../utils/currencyConverter.jsx";
 import "../styles/Programs.css";
 
 const Programs = () => {
@@ -58,7 +59,6 @@ const Programs = () => {
                                         ⏳ {program.duration}
                                     </span>
                                 )}
-
 
                                 <p className="program-description">{program.description}</p>
 

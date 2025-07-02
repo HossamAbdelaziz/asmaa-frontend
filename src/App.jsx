@@ -12,6 +12,9 @@ import { Analytics } from "@vercel/analytics/react";
 import { Capacitor } from '@capacitor/core';
 import SafeAreaWrapper from './components/SafeAreaWrapper';
 
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+
 import './index.css';
 import './styles/Footer.css';
 import './styles/app-mobile.css';
@@ -72,7 +75,8 @@ function App() {
         document.body.classList.add('capacitor-android');
       }
 
-      initNativeFCM();
+      // Temporarily disabled to avoid conflicts with AuthContext FCM
+      // initNativeFCM();
     } else {
       document.body.classList.remove('capacitor');
       import('@codetrix-studio/capacitor-google-auth').then(({ GoogleAuth }) => {

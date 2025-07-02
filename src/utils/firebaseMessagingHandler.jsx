@@ -15,22 +15,25 @@ export const setupFirebaseMessaging = async () => {
     const platform = Capacitor.getPlatform();
     const isNative = Capacitor.isNativePlatform();
 
+    console.log(`🌍 Platform: ${platform}, isNative: ${isNative}`);
+
     let token;
 
-    if (isNative && platform !== 'ios') {
+    if (isNative) {
+      console.log("📲 Native platform detected. Requesting permission...");
       const permStatus = await FirebaseMessaging.requestPermissions();
-      console.log("📲 Native FCM Permission status:", permStatus);
+      console.log("🔐 Permission status:", permStatus);
 
       if (permStatus.receive !== 'granted') {
-        console.warn('❌ Native permission not granted');
+        console.warn('❌ Native permission NOT granted');
         return;
       }
 
       const tokenResult = await FirebaseMessaging.getToken();
       token = tokenResult?.token;
-      console.log("🔐 Native FCM Token:", token);
+      console.log("✅ Native FCM Token received:", token);
     } else {
-      console.log("🌐 Web platform detected. Setting up FCM...");
+      console.log("🌐 Web platform. Requesting web permission...");
       const permission = await Notification.requestPermission();
       if (permission !== 'granted') {
         console.warn('❌ Web permission denied');
@@ -39,19 +42,30 @@ export const setupFirebaseMessaging = async () => {
 
       const messaging = getMessaging(getApp());
       token = await getToken(messaging, { vapidKey });
-      console.log("🔐 Web FCM Token:", token);
+      console.log("✅ Web FCM Token received:", token);
     }
 
-    if (!token) return;
+    if (!token) {
+      console.warn("⚠️ No token was returned!");
+      return;
+    }
 
-    // Save to Firestore
+    console.log("👤 Waiting for user to be authenticated...");
     onAuthStateChanged(getAuth(), async (user) => {
-      if (!user) return;
+      if (!user) {
+        console.warn("❌ No authenticated user!");
+        return;
+      }
+
+      console.log(`👤 Authenticated user: ${user.uid}`);
       const userRef = doc(db, 'users', user.uid);
       const snap = await getDoc(userRef);
       const existing = snap.exists() ? snap.data()?.messaging?.fcmTokens || [] : [];
 
-      if (!existing.includes(token)) {
+      const alreadyExists = existing.includes(token);
+      console.log("🔎 Token exists already?", alreadyExists);
+
+      if (!alreadyExists) {
         await setDoc(userRef, {
           messaging: {
             fcmTokens: [...existing, token],
@@ -61,7 +75,7 @@ export const setupFirebaseMessaging = async () => {
 
         console.log("✅ FCM token saved to Firestore");
       } else {
-        console.log("ℹ️ Token already exists");
+        console.log("ℹ️ Token already exists in Firestore. Skipping save.");
       }
     });
 

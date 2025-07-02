@@ -17,8 +17,8 @@ export const setupFirebaseMessaging = async () => {
         const platform = Capacitor.getPlatform();
         const auth = getAuth();
 
-        if (isNative && platform !== "ios") {
-            // ✅ Native FCM
+        if (isNative) {
+            // ✅ Native FCM (iOS & Android)
             const permStatus = await FirebaseMessaging.requestPermissions();
             console.log("📲 Native FCM Permission:", permStatus);
 
@@ -32,32 +32,62 @@ export const setupFirebaseMessaging = async () => {
             console.log("🔐 Native FCM Token:", token);
 
             onAuthStateChanged(auth, async (user) => {
-                if (user && token) {
-                    const userRef = doc(db, "users", user.uid);
-                    const userSnap = await getDoc(userRef);
-                    const existing = userSnap.exists() ? userSnap.data()?.messaging?.fcmTokens || [] : [];
+    console.log("🔄 setupFirebaseMessaging: onAuthStateChanged triggered", user ? user.uid : "no user");
+    if (!user) return;
 
-                    const alreadyExists = existing.some(entry => entry.token === token);
+    let finalToken = token;
 
-                    if (!alreadyExists) {
-                        await setDoc(userRef, {
-                            messaging: {
-                                fcmTokens: arrayUnion({
-                                    token,
-                                    platform,
-                                    lastUsed: new Date(),
-                                    isActive: true
-                                }),
-                                updatedAt: new Date()
-                            }
-                        }, { merge: true });
+    // ✅ If token not ready, retry a few times
+    if (!finalToken) {
+        console.warn("⏳ Waiting for native token...");
+        for (let i = 0; i < 5; i++) {
+            const retry = await FirebaseMessaging.getToken();
+            if (retry?.token) {
+                finalToken = retry.token;
+                console.log("🔁 Retried & got token:", finalToken);
+                break;
+            }
+            await new Promise(r => setTimeout(r, 1000)); // wait 1 sec
+        }
+    }
 
-                        console.log("✅ Native token saved to Firestore");
-                    } else {
-                        console.log("ℹ️ Native token already exists");
-                    }
+    if (!finalToken) {
+        console.warn("❌ Still no token after retrying");
+        return;
+    }
+
+    console.log("💾 Attempting to save token to Firestore for user:", user.uid);
+    // ✅ Save to Firestore if not already there
+    const userRef = doc(db, "users", user.uid);
+    const userSnap = await getDoc(userRef);
+    const existing = userSnap.exists() ? userSnap.data()?.messaging?.fcmTokens || [] : [];
+    console.log("📋 Existing tokens:", existing.length);
+
+    const alreadyExists = existing.some(entry => entry.token === finalToken);
+    console.log("🔍 Token already exists?", alreadyExists);
+
+    if (!alreadyExists) {
+        try {
+            await setDoc(userRef, {
+                messaging: {
+                    fcmTokens: arrayUnion({
+                        token: finalToken,
+                        platform,
+                        lastUsed: new Date(),
+                        isActive: true
+                    }),
+                    updatedAt: new Date()
                 }
-            });
+            }, { merge: true });
+
+            console.log("✅ Native token saved after retry");
+        } catch (error) {
+            console.error("❌ Failed to save token to Firestore:", error);
+        }
+    } else {
+        console.log("ℹ️ Native token already exists");
+    }
+});
 
             FirebaseMessaging.addListener('notificationReceived', event => {
                 console.log('📩 Native foreground notification:', event);

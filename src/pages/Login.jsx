@@ -134,61 +134,75 @@ useEffect(() => {
 };
 
   return (
-    <div className="container mt-5" style={{ maxWidth: "500px" }}>
-      <h2>Login to Your Account</h2>
+    <div className="page-wrapper">
+        <div className="login-container login-card">
+          <h2>Login to Your Account</h2>
 
-      {error && <div className="alert alert-danger">{error}</div>}
+        {error && <div className="alert alert-danger" role="alert">{error}</div>}
 
-      <form onSubmit={handleLogin}>
-        <div className="mb-3">
-          <label>Email</label>
-          <input
-            type="email"
-            className="form-control"
-            required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-
-        <div className="mb-3 password-wrapper">
-          <label>Password</label>
-          <div className="input-group">
+        <form onSubmit={handleLogin} autoComplete="on" style={{ width: '100%' }}>
+          <div className="mb-3">
+            <label htmlFor="login-email">Email</label>
             <input
-              type={showPassword ? "text" : "password"}
+              id="login-email"
+              type="email"
               className="form-control"
               required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              autoComplete="email"
+              aria-label="Email address"
+              style={{ fontSize: '16px' }}
             />
-            <span
-              className="toggle-password"
-              onClick={() => setShowPassword(!showPassword)}
-            >
-              {showPassword ? "🙈" : "👁️"}
-            </span>
           </div>
-        </div>
 
-        <div className="text-end mb-3">
-          <a href="/forgot-password">Forgot Password?</a>
-        </div>
+          <div className="mb-3 password-wrapper">
+            <label htmlFor="login-password">Password</label>
+            <div className="input-group">
+              <input
+                id="login-password"
+                type={showPassword ? "text" : "password"}
+                className="form-control"
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                autoComplete="current-password"
+                aria-label="Password"
+                style={{ fontSize: '16px' }}
+              />
+              <span
+                className="toggle-password"
+                onClick={() => setShowPassword(!showPassword)}
+                tabIndex={0}
+                role="button"
+                aria-label={showPassword ? "Hide password" : "Show password"}
+                onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') setShowPassword(!showPassword); }}
+              >
+                {showPassword ? "🙈" : "👁️"}
+              </span>
+            </div>
+          </div>
 
-        <button type="submit" className="btn btn-primary w-100">
-          Login
+          <div className="text-end mb-3">
+            <a href="/forgot-password">Forgot Password?</a>
+          </div>
+
+          <button type="submit" className="btn btn-primary w-100" aria-label="Login">
+            Login
+          </button>
+        </form>
+
+        <div className="text-center my-3">or</div>
+
+        <button type="button" className="btn btn-google w-100" onClick={handleGoogleLogin} aria-label="Continue with Google">
+          <img
+            src="https://developers.google.com/identity/images/g-logo.png"
+            alt="Google logo"
+            className="google-icon"
+          />
+          <span>Continue with Google</span>
         </button>
-      </form>
-
-      <div className="text-center my-3">or</div>
-
-      <button type="button" className="btn btn-google w-100" onClick={handleGoogleLogin}>
-        <img
-          src="https://developers.google.com/identity/images/g-logo.png"
-          alt="Google logo"
-          className="google-icon"
-        />
-        <span>Continue with Google</span>
-      </button>
+      </div>
     </div>
   );
 };

@@ -7,29 +7,24 @@
     position: sticky;
     top: 0;
     z-index: 1000;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
-
-    /* ↑ NEW vertical sizing ↑ */
+    box-shadow: 0 2px 12px rgba(44,62,80,0.07), 0 1.5px 0 #e9ecef;
+    border-bottom: 1.5px solid #e9ecef;
     height: auto !important;
-    /* makes the bar taller */
-    padding: 10px 30px;
-    /* 0 top/bottom, 50px left/right */
-
-    /* flex centering */
+    padding: 8px 18px 8px 18px;
     display: flex;
     align-items: center !important;
     justify-content: center;
+    margin-top: 0 !important;
 }
-
 
 .navbar-container {
     height: 100%;
-    /* fills whatever height .main-navbar ends up */
     max-width: 1400px;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding: 0;
 }
 
 /* Brand (Logo + Name) */
@@ -38,16 +33,12 @@
     align-items: center;
     gap: 15px;
     text-decoration: none !important;
-
 }
 
 .brand img {
     height: 80px;
     /* was 80px—shrinking it centers it better */
     transition: transform 0.4s ease;
-    /* adjust timing as you like */
-
-
 }
 
 .brand img:hover {
@@ -254,16 +245,18 @@
     display: none;
     background: none;
     border: none;
-    font-size: 24px;
-    cursor: pointer;
+    font-size: 2rem;
+    color: #333;
+    margin-left: 10px;
+    margin-right: 0;
+    padding: 4px 8px;
+    border-radius: 6px;
+    transition: background 0.2s;
 }
 
-
-
-
-
-
-
+.hamburger-btn:active, .hamburger-btn:focus {
+    background: #f1f3f5;
+}
 
 /* =======================
      MOBILE DRAWER STYLES
@@ -296,8 +289,6 @@
     transform: translateX(100%);
     pointer-events: none;
 }
-
-
 
 @keyframes slideIn {
     from {
@@ -409,6 +400,20 @@
      RESPONSIVE BREAKPOINT
 =========================== */
 @media (max-width: 768px) {
+    .main-navbar {
+        padding: 6px 8px 6px 8px;
+    }
+    .navbar-container {
+        padding: 0;
+    }
+    .brand img {
+        height: 60px;
+        max-width: 60px;
+        margin-right: 6px;
+    }
+    .brand span {
+        font-size: 1.1rem;
+    }
 
     .navbar-links,
     .auth-buttons {
@@ -420,12 +425,8 @@
     }
 }
 
-
-
 /* ───── MOBILE NAVBAR LAYOUT ───── */
 @media (max-width: 768px) {
-
-    /* 1) Make nav flex children: the .navbar-container shrinks to content, and the hamburger sits at the far end */
     .main-navbar {
         justify-content: space-between !important;
         padding: 0 16px;
@@ -434,7 +435,7 @@
 
     .navbar-container {
         width: auto;
-        /* don’t fill 100%—shrink to brand width */
+        /* don't fill 100%—shrink to brand width */
         flex: 1;
         /* but take up remaining space so brand stays left */
         justify-content: flex-start;
@@ -462,7 +463,6 @@
         height: 80px;
         padding: 10px;
         /* was 80px—shrinking it centers it better */
-
     }
 }
 
@@ -481,8 +481,6 @@
     }
 }
 
-
-
 /* 🔥 Force fix for drawer buttons in all cases */
 .mobile-drawer .btn-login,
 .mobile-drawer .btn-signup {
@@ -500,7 +498,6 @@
     font-weight: 600 !important;
 }
 
-
 /* ✅ Fix logo & brand alignment only on Android */
 body.capacitor-android .main-navbar .brand {
     align-items: center !important;
@@ -515,16 +512,13 @@ body.capacitor-android .main-navbar .brand img {
     padding: 0 !important;
 }
 
-
-
-
 /* =============================
 🔔 Navbar Icons (Mobile Right Side)
 ============================= */
 .navbar-icons {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
 }
 
 @media (max-width: 768px) {
@@ -612,5 +606,17 @@ body.capacitor-android .main-navbar .brand img {
 
 .language-toggle .lang-icon:hover {
     background-color: #e4e4e4;
+}
+
+/* Remove top margin from main content if present */
+.main-content, .container, .program-detail, .programs-page {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+
+/* Ensure vertical centering for all navbar items */
+.navbar-links, .auth-buttons, .navbar-icons {
+    align-items: center;
+    display: flex;
 }
 

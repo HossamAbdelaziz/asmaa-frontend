@@ -4,8 +4,8 @@
         "subtitle": "I help individuals who struggle with eating disorders break free from disordered eating behaviors and achieve full recovery — reaching mental, physical, and nutritional balance.",
         "button": "Start Your Journey",
         "cta": "Explore Programs",
-        "aboutTitle": "Why working with eating disorders recovery coach can transform your life !?",
-        "aboutText": "Recovery isn’t just about stopping disordered eating — it’s a journey of rediscovering your true self, and that journey needs a knowledgeable guide who knows the way. That’s why you should begin this path with me.\n\nAs a specialized coach, I will be your ally in this challenge — uncovering the roots of your struggles and helping you reconnect with your true voice.\n\nYou’ll finally break free from the exhausting cycle of random attempts that have drained your energy.\n\nHere, there’s no one-size-fits-all formula… Instead, you’ll receive a personalized plan crafted with awareness and care by a professional.\n\nYou’ll learn life-long skills — step by step, with me by your side.\nBecause the moment you decide to seek help... is the moment your victory begins.",
+        "aboutTitle": "Why working with eating disorders recovery coach can transform your life !?",
+        "aboutText": "Recovery isn't just about stopping disordered eating — it's a journey of rediscovering your true self, and that journey needs a knowledgeable guide who knows the way. That's why you should begin this path with me.\n\nAs a specialized coach, I will be your ally in this challenge — uncovering the roots of your struggles and helping you reconnect with your true voice.\n\nYou'll finally break free from the exhausting cycle of random attempts that have drained your energy.\n\nHere, there's no one-size-fits-all formula… Instead, you'll receive a personalized plan crafted with awareness and care by a professional.\n\nYou'll learn life-long skills — step by step, with me by your side.\nBecause the moment you decide to seek help... is the moment your victory begins.",
         "aboutCoachTitle": "About Coach Asmaa",
         "aboutCoachShort": "A certified coach in the treatment and recovery from eating disorders and trauma related to disordered eating. She specializes in helping individuals achieve full recovery. Her approach combines scientific practices with deep personal experience.",
         "readMore": "Read more about Coach",
@@ -39,8 +39,8 @@
         "title": "Meet Coach Asmaa",
         "bio": "Coach Asmaa is a certified specialist in eating disorders and body image with years of experience helping women build a healthier relationship with food and themselves. Her approach is rooted in empathy, evidence-based practices, and deep personal growth.",
         "certificatesTitle": "My Professional Certificates",
-        "bio2": "I’m Asmaa Gadelrab, a therapist and coach specializing in eating disorder recovery. My journey into this field began with a deeply personal struggle — I battled an eating disorder throughout my teenage years for six long years, marked by mental and nutritional turmoil. I experienced destructive dieting attempts and an obsession with weight loss, which led to disordered eating behaviors.\n\nThrough my recovery journey, I discovered how widespread and silent this deadly disorder is. That realization became a turning point in my life — I chose to turn my pain into a message of hope and healing for others.",
-        "bio3": "Founder of the “Undiet Your Mindset” Program — Launched in 2019 as the first program supporting individuals who want to challenge disordered eating thoughts and behaviors.\n\nCreator of the first holistic eating disorder recovery program in the Arab world — A comprehensive approach addressing the psychological, social, physical, and nutritional aspects of full recovery.\n\nHelped over 500 individuals globally — Guiding them toward complete recovery and food freedom.",
+        "bio2": "I'm Asmaa Gadelrab, a therapist and coach specializing in eating disorder recovery. My journey into this field began with a deeply personal struggle — I battled an eating disorder throughout my teenage years for six long years, marked by mental and nutritional turmoil. I experienced destructive dieting attempts and an obsession with weight loss, which led to disordered eating behaviors.\n\nThrough my recovery journey, I discovered how widespread and silent this deadly disorder is. That realization became a turning point in my life — I chose to turn my pain into a message of hope and healing for others.",
+        "bio3": "Founder of the \"Undiet Your Mindset\" Program — Launched in 2019 as the first program supporting individuals who want to challenge disordered eating thoughts and behaviors.\n\nCreator of the first holistic eating disorder recovery program in the Arab world — A comprehensive approach addressing the psychological, social, physical, and nutritional aspects of full recovery.\n\nHelped over 500 individuals globally — Guiding them toward complete recovery and food freedom.",
         "certificates": "Certificates"
     },
     "questionnaire": {
@@ -51,8 +51,8 @@
         "submit": "View Result",
         "book_now": "Book a Free Session Now",
         "result_disorder": "You may have signs of an eating disorder. We recommend booking a free 1-hour consultation.",
-        "result_warning": "You may not have an eating disorder, but it’s important to be mindful of your eating habits.",
-        "result_safe": "You don’t appear to have an eating disorder.",
+        "result_warning": "You may not have an eating disorder, but it's important to be mindful of your eating habits.",
+        "result_safe": "You don't appear to have an eating disorder.",
         "q1": "I regularly eat even when I am not hungry.",
         "q2": "I eat very quickly and am not aware how much I have eaten.",
         "q3": "I am very self-conscious about eating in social situations.",
@@ -80,28 +80,32 @@
             "duration": "8 Weeks",
             "description": "Helping teens aged 10–19 build a healthy, shame-free relationship with food and body.",
             "image": "program1.jpg",
-            "slug": "teen-recovery"
+            "slug": "teen-recovery",
+            "price": 1100
         },
         {
             "title": "Eating disorder recovery journey",
             "duration": "8 Weeks",
             "description": "A holistic healing path toward peace with food and body.",
             "image": "program2.jpg",
-            "slug": "recovery-journey"
+            "slug": "recovery-journey",
+            "price": 1100
         },
         {
             "title": "Undiet Your Mindset Program",
             "duration": "6 Weeks",
             "description": "A journey of awareness toward a healthier body and a balanced relationship with food.",
             "image": "program3.jpg",
-            "slug": "undiet-mindset"
+            "slug": "undiet-mindset",
+            "price": 950
         },
         {
             "title": "Deep Health cycle program",
             "duration": "4 Weeks",
             "description": "A journey of self-discovery beneath food and body.",
             "image": "program4.jpg",
-            "slug": "deep-health"
+            "slug": "deep-health",
+            "price": 800
         }
     ],
     "programs_intro": "Each program was carefully designed by Coach Asmaa based on years of experience helping women recover from disordered eating. These journeys are built to guide you step by step toward a better relationship with food and your body.",
@@ -110,7 +114,7 @@
         "teen-recovery": {
             "title": "Teens Eating Disorder Recovery Program",
             "tagline": "For ages 10 to 19",
-            "description": "❓ Is your child struggling with food or body image?\nThe Teens Recovery Program is specially designed to support teenagers on their journey to self-understanding, developing a healthy relationship with their bodies, and breaking the silence and shame often tied to eating disorders.\n\nWhether the struggle is rooted in bullying, peer pressure, childhood trauma, or anxiety about physical changes, this program offers practical and relatable tools that resonate with the teenager’s world and address their psychological and social needs.",
+            "description": "❓ Is your child struggling with food or body image?\nThe Teens Recovery Program is specially designed to support teenagers on their journey to self-understanding, developing a healthy relationship with their bodies, and breaking the silence and shame often tied to eating disorders.\n\nWhether the struggle is rooted in bullying, peer pressure, childhood trauma, or anxiety about physical changes, this program offers practical and relatable tools that resonate with the teenager's world and address their psychological and social needs.",
             "image": "program1.jpg",
             "price": 1100,
             "stripeLink": "https://buy.stripe.com/8wM6s49VoghFehafZ8",
@@ -141,7 +145,7 @@
                 "🔸 Mini CBT sessions using games, apps, and interactive tools.",
                 "🔸 A recovery app for teens: meal reminders, exercises, and chat with the coach.",
                 "🔸 Short videos and memes explaining disorders in teen-friendly language.",
-                "🔸 Weekly challenges like “A Day Without Calorie Counting!”",
+                "🔸 Weekly challenges like \"A Day Without Calorie Counting!\"",
                 "🔸 Parent Zoom sessions: learn how to support without pressure.",
                 "🔸 Sensitivity-focused parent guides for body and weight topics.",
                 "🔸 Support for talents like drawing, sports, or writing.",
@@ -153,7 +157,7 @@
         "recovery-journey": {
             "title": "Recovery Journey from Eating Disorders",
             "tagline": "A holistic healing path toward peace with food and body",
-            "description": "✨ Do you feel trapped in a never-ending cycle of eating disorders?\nYou might sometimes feel like your battle with food never ends...\nFrom episodes of binge eating and forced starvation, to feelings of guilt and shame linked to every meal.\nFrom constant comparisons with others' bodies, to an inner voice that criticizes you relentlessly…\nAll of this may keep you in a daily struggle, robbing you of peace and distorting your relationship with yourself and your body.\n\n🌱 This is where transformation begins…\nThe \"Recovery Journey from Eating Disorders\" is not just a temporary plan or a new diet.\nIt is a comprehensive and deep path that rebuilds your relationship with your body, liberates you from the chains of your past, and equips you with practical, real-world tools to reclaim control over your life.\n\nThis program is designed especially for you, if:\n\n- You feel stuck in a daily conflict with food.\n- You swing between binge eating and strict restriction.\n- You strive for perfection in your appearance and feel unsatisfied no matter what.\n- You long to understand your body instead of fighting it.\n- You seek freedom from this physical and emotional struggle but don’t know where to start.",
+            "description": "✨ Do you feel trapped in a never-ending cycle of eating disorders?\nYou might sometimes feel like your battle with food never ends...\nFrom episodes of binge eating and forced starvation, to feelings of guilt and shame linked to every meal.\nFrom constant comparisons with others' bodies, to an inner voice that criticizes you relentlessly…\nAll of this may keep you in a daily struggle, robbing you of peace and distorting your relationship with yourself and your body.\n\n🌱 This is where transformation begins…\nThe Recovery Journey from Eating Disorders is not just a temporary plan or a new diet.\nIt is a comprehensive and deep path that rebuilds your relationship with your body, liberates you from the chains of your past, and equips you with practical, real-world tools to reclaim control over your life.\n\nThis program is designed especially for you, if:\n\n- You feel stuck in a daily conflict with food.\n- You swing between binge eating and strict restriction.\n- You strive for perfection in your appearance and feel unsatisfied no matter what.\n- You long to understand your body instead of fighting it.\n- You seek freedom from this physical and emotional struggle but don't know where to start.",
             "image": "program2.jpg",
             "price": 1100,
             "stripeLink": "https://buy.stripe.com/28og2E0kOe9x5KEfZ9",
@@ -169,13 +173,13 @@
                 "You swing between binge eating and strict restriction.",
                 "You strive for perfection in your appearance and feel unsatisfied no matter what.",
                 "You long to understand your body instead of fighting it.",
-                "You seek freedom from this physical and emotional struggle but don’t know where to start."
+                "You seek freedom from this physical and emotional struggle but don't know where to start."
             ],
             "results": [
                 "✅ Sustainable freedom from binge eating and harmful food behaviors—resolved at the root.",
                 "✅ Emotional calm and mental balance in your relationship with food and social eating situations.",
                 "✅ A true shift in how you view your body—from constant criticism to appreciation and acceptance.",
-                "✅ Renewed confidence in your body’s ability to heal and regain control without fear or doubt.",
+                "✅ Renewed confidence in your body's ability to heal and regain control without fear or doubt.",
                 "✅ Strong psychological immunity against negative comments, social pressure, and daily stressors."
             ],
             "cta": "Start Your Recovery Journey"
@@ -183,14 +187,14 @@
         "undiet-mindset": {
             "title": "Undiet Your Mindset Program",
             "tagline": "A journey of awareness toward a healthier body and a balanced relationship with food",
-            "description": "❓ Tired of restrictive diets that start with excitement and end in disappointment?\nDo you long to break free from scale obsession, emotional eating, and the endless cycle of guilt?\n\nThe Undiet Your Mindset program is more than a food plan...\nIt’s a transformational shift in how you think about food and your body—a path where there’s no restriction, no punishment, and no fake perfection.",
+            "description": "❓ Tired of restrictive diets that start with excitement and end in disappointment?\nDo you long to break free from scale obsession, emotional eating, and the endless cycle of guilt?\n\nThe Undiet Your Mindset program is more than a food plan...\nIt's a transformational shift in how you think about food and your body—a path where there's no restriction, no punishment, and no fake perfection.",
             "image": "program3.jpg",
             "price": 950,
             "stripeLink": "https://buy.stripe.com/14k5o0ffIghF8WQ6oA",
             "audience": [
                 "Any woman who wants to lose weight without punishing or starving her body.",
-                "Those tired of the “all-or-nothing” mindset when it comes to eating.",
-                "Anyone who’s been trapped in a loop of harsh diets and emotional breakdowns.",
+                "Those tired of the all-or-nothing mindset when it comes to eating.",
+                "Anyone who's been trapped in a loop of harsh diets and emotional breakdowns.",
                 "Women whose relationship with food is filled with emotional tension and contradictions.",
                 "Anyone seeking true freedom from food rules, not just a lower number on the scale."
             ],
@@ -202,8 +206,8 @@
                 "✅ Mindful eating strategies and stress-management tools for emotional triggers."
             ],
             "features": [
-                "🛑 Breaking the Diet Mentality:\n- Freeing yourself from toxic beliefs like “eating after 8 pm makes you gain weight!”\n- Replacing shame and deprivation with a mindset of awareness and flexibility.",
-                "🍽️ Redefining Your Relationship with Food:\n- Learning how to eat with love and mindfulness, without labeling food as “good” or “bad.”\n- Stopping the use of food as a reward or punishment.",
+                "🛑 Breaking the Diet Mentality:\n- Freeing yourself from toxic beliefs like eating after 8 pm makes you gain weight!\n- Replacing shame and deprivation with a mindset of awareness and flexibility.",
+                "🍽️ Redefining Your Relationship with Food:\n- Learning how to eat with love and mindfulness, without labeling food as good or bad.\n- Stopping the use of food as a reward or punishment.",
                 "💬 Healing the Roots of Emotional Eating:\n- Addressing childhood traumas related to food and body image.\n- Understanding emotional eating as a coping mechanism and redirecting emotions in healthier ways."
             ],
             "results": [
@@ -217,33 +221,33 @@
         "deep-health": {
             "title": "Deep Health Course",
             "tagline": "A journey of self-discovery beneath food and body",
-            "description": "❓ Have you ever felt that your relationship with food isn’t just about eating?\nHave you wondered why you crave certain foods when you’re stressed? Or why it’s hard to stop eating even after you’re full?\n\nThe Deep Health Course isn’t a diet—it’s a deep journey of self-awareness that reveals the hidden dimensions behind your relationship with food and your body.",
+            "description": "❓ Have you ever felt that your relationship with food isn't just about eating?\nHave you wondered why you crave certain foods when you're stressed? Or why it's hard to stop eating even after you're full?\n\nThe Deep Health Course isn't a diet—it's a deep journey of self-awareness that reveals the hidden dimensions behind your relationship with food and your body.",
             "image": "program4.jpg",
             "price": 850,
             "stripeLink": "https://buy.stripe.com/28o03G7NgghF4GA28l",
             "audience": [
                 "Any woman who feels that her relationship with food is emotionally and mentally complex.",
-                "Those who’ve tried every diet yet never found emotional peace or physical balance.",
-                "Anyone who wants to understand “Who am I?” beyond her weight, appearance, or social roles.",
+                "Those who've tried every diet yet never found emotional peace or physical balance.",
+                "Anyone who wants to understand Who am I? beyond her weight, appearance, or social roles.",
                 "Those seeking true internal healing that touches every aspect of life—not just meal control."
             ],
             "offers": [
                 "🔍 Decode hunger: Understand the difference between physical, emotional, and soulful hunger.",
-                "🧭 Reset satiety signals: Learn to stop when your body says “enough,” not just when your plate is empty.",
+                "🧭 Reset satiety signals: Learn to stop when your body says enough, not just when your plate is empty.",
                 "❌ Break free from toxic diets: Move from deprivation to conscious nutritional flexibility.",
-                "🛡️ Build mental immunity against societal messages like: “Lose weight so you can get married!”",
+                "🛡️ Build mental immunity against societal messages like: Lose weight so you can get married!",
                 "🎨 Art therapy: Reconnect with your body nonverbally—through color, shape, and feeling."
             ],
             "features": [
-                "🔬 Biological Dimension – The Intelligent Body:\n- How do stress hormones influence your food decisions?\n- Why is the gut called the \"second brain\"? What is its link to mood and immunity?\n- How can we balance insulin and female hormones through awareness?",
-                "🧠 Psychological Dimension – The Hidden Mind:\n- Exploring emotional and food-related wounds from childhood, like: “Don’t eat or you’ll get fat!”\n- Uncovering automatic thoughts that lead to punishing your body through silence or starvation.",
-                "🌍 Social Dimension – The Toxic Society:\n- How comments from family, school, and social media shape your body image.\n- Tools to protect against the stigma of thinness or obesity, and reclaim self-respect.",
+                "🔬 Biological Dimension – The Intelligent Body:\n- How do stress hormones influence your food decisions?\n- Why is the gut called the second brain? What is its link to mood and immunity?\n- How can we balance insulin and female hormones through awareness?",
+                "🧠 Psychological Dimension – The Hidden Mind:\n- Exploring emotional and food-related wounds from childhood, like: Don't eat or you'll get fat!\n- Uncovering automatic thoughts that lead to punishing your body through silence or starvation.",
+                "🌸 Social Dimension – The Toxic Society:\n- How comments from family, school, and social media shape your body image.\n- Tools to protect against the stigma of thinness or obesity, and reclaim self-respect.",
                 "🌸 Spiritual Dimension – The True Self:\n- Who are you beyond being the daughter, the student, the overweight, the perfectionist?\n- A call to rediscover your authentic inner voice and reconnect with yourself—away from comparisons and judgment."
             ],
             "results": [
                 "✅ Achieve balance in insulin and female hormones.",
                 "✅ Heal your gut and improve digestion, mood, and your sense of physical safety.",
-                "✅ Develop deep awareness of your body’s signals and respond to them with flexibility.",
+                "✅ Develop deep awareness of your body's signals and respond to them with flexibility.",
                 "✅ Reconnect with your true self—beyond roles and labels.",
                 "✅ Gradually recover from societal traumas and reclaim your self-image with clarity and confidence."
             ],
@@ -304,14 +308,14 @@
             "browseProgramsDesc": "Explore our specialized recovery programs to find the right one for you.",
             "takeQuiz": "Start Quiz",
             "viewPrograms": "View Programs",
-            "quote": "Your recovery starts with a single step. Let’s take it together."
+            "quote": "Your recovery starts with a single step. Let's take it together."
         },
         "quote1": "Recovery is not one and done. It is a lifelong journey.",
         "quote2": "You are more than your eating disorder.",
         "quote3": "Progress is progress, no matter how small.",
         "quote4": "Healing takes time. Be patient with yourself.",
         "quote5": "You are worthy of love and nourishment.",
-        "quote6": "Don’t wait for confidence to show up – build it step by step.",
+        "quote6": "Don't wait for confidence to show up – build it step by step.",
         "yourProgram": "Your Program",
         "program": "Program",
         "startDate": "Start",

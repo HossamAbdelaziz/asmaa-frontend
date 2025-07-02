@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { doc, getDoc } from "firebase/firestore";
 import { auth, db } from "../firebase/firebaseConfig";
 import { onAuthStateChanged } from "firebase/auth";
+import { getCurrencyDisplay } from "../utils/currencyConverter.jsx";
 import "../styles/ProgramDetails.css";
 
 const ProgramDetails = () => {
@@ -131,11 +132,29 @@ const ProgramDetails = () => {
                         💼 {i18n.language === "ar" ? "قيمة الاستثمار" : "Your Investment"}
                     </h4>
 
-                    <p className="investment-price">
-                        {i18n.language === "ar"
-                            ? `فقط ${program.price} دولار كندي للبرنامج الكامل`
-                            : `Only $${program.price} CAD for the full program`}
-                    </p>
+                    {/* Multi-Currency Pricing Display - Professional, Consistent, Flags for All */}
+                    <div className="multi-currency-pricing new-currency-layout">
+                        <div className="currency-row">
+                            <div className="currency-card">
+                                <span className="currency-flag">🇨🇦</span>
+                                <span className="currency-amount">{getCurrencyDisplay(program.price).CAD.replace('C$', '')}</span>
+                                <span className="currency-name">CAD</span>
+                            </div>
+                            <div className="currency-card">
+                                <span className="currency-flag">🇦🇪</span>
+                                <span className="currency-amount">{getCurrencyDisplay(program.price).AED}</span>
+                                <span className="currency-name">AED</span>
+                            </div>
+                            <div className="currency-card">
+                                <span className="currency-flag">🇸🇦</span>
+                                <span className="currency-amount">{getCurrencyDisplay(program.price).SAR}</span>
+                                <span className="currency-name">SAR</span>
+                            </div>
+                        </div>
+                        <div className="price-note mt-2">
+                            {i18n.language === "ar" ? "للبرنامج الكامل" : "for the full program"}
+                        </div>
+                    </div>
 
                     <div className="investment-buttons d-flex flex-column flex-md-row justify-content-center align-items-center gap-3 mt-4 flex-wrap">
                         {userSubscription?.status === "active" && userSubscription?.programTitle === program.title ? (
