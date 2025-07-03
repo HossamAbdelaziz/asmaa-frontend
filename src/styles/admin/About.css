@@ -1,0 +1,119 @@
+/* =============================
+   🧍 About Page Shared Styling
+============================= */
+
+/* Match Home Page container */
+.about-page {
+    background-color: var(--bg-page);
+    padding-top: 40px;
+    padding-bottom: 80px;
+}
+
+.page-container {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Typography Consistency */
+.about-title {
+    font-size: 2.5rem;
+    color: var(--text-primary);
+    font-family: var(--font-heading);
+    font-weight: 700;
+}
+
+.about-intro {
+    font-size: 1.25rem;
+    color: var(--text-subtle);
+    line-height: 1.8;
+    font-family: var(--font-body);
+}
+
+/* =============================
+     👤 Bio Section
+  ============================= */
+.about-bio-section .about-photo {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.about-paragraph {
+    font-size: 1.2rem;
+    color: var(--text-primary);
+    line-height: 1.8;
+    font-family: var(--font-body);
+    margin-bottom: 1.25rem;
+}
+
+/* =============================
+     🏅 Certificates Section
+  ============================= */
+.about-certificates {
+    margin-top: 60px;
+}
+
+.certificates-title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    font-family: var(--font-heading);
+    color: var(--text-primary);
+}
+
+.certificate-img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease;
+}
+
+.certificate-img:hover {
+    transform: scale(1.03);
+}
+
+/* =============================
+     🔄 Language Direction Overrides
+  ============================= */
+.about-page.ltr {
+    direction: ltr;
+    text-align: left;
+}
+
+.about-page.rtl {
+    direction: rtl;
+    text-align: right;
+}
+
+/* Keep layout LTR for grid/flex */
+.about-bio-section,
+.about-certificates .row {
+    direction: ltr !important;
+}
+
+/* =============================
+     📱 Responsive Adjustments
+  ============================= */
+@media (max-width: 768px) {
+    .about-title {
+        font-size: 2rem;
+    }
+
+    .about-intro {
+        font-size: 1.1rem;
+    }
+
+    .about-paragraph {
+        font-size: 1.05rem;
+    }
+
+    .certificates-title {
+        font-size: 1.4rem;
+    }
+
+    .page-container {
+        padding: 0 16px;
+    }
+}

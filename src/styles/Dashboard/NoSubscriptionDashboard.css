@@ -1,0 +1,79 @@
+/* ================================
+   🧾 No Subscription Dashboard
+================================= */
+.no-sub-dashboard {
+    padding: 2rem;
+    background-color: var(--bg-page);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+}
+
+.no-sub-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.no-sub-avatar-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.no-sub-avatar {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--accent);
+}
+
+.no-sub-actions {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    margin-bottom: 2rem;
+}
+
+.no-sub-card {
+    background-color: var(--bg-surface);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    text-align: center;
+}
+
+.no-sub-card h4 {
+    font-size: 1.2rem;
+    margin-bottom: 0.75rem;
+    color: var(--text-primary);
+}
+
+.no-sub-card p {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+}
+
+.no-sub-btn {
+    margin-top: 1rem;
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: var(--accent);
+    color: white;
+    font-weight: 600;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background 0.3s;
+}
+
+.no-sub-btn:hover {
+    background-color: var(--accent-dark);
+}
+
+.no-sub-quote {
+    margin-top: 2rem;
+    font-style: italic;
+    text-align: center;
+    color: var(--text-secondary);
+}

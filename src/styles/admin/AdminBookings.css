@@ -1,0 +1,107 @@
+.admin-bookings {
+    padding: 20px;
+    font-family: 'Segoe UI', sans-serif;
+    width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+.admin-bookings h2 {
+    font-size: 22px;
+    color: #1b4332;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.booking-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 20px;
+    justify-content: center;
+}
+
+.booking-filters .form-control,
+.booking-filters .form-select {
+    max-width: 300px;
+    width: 100%;
+    font-size: 14px;
+    padding: 8px;
+}
+
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.admin-bookings table {
+    width: 100%;
+    min-width: 900px;
+    border-collapse: collapse;
+    font-size: 14px;
+    background-color: white;
+}
+
+.admin-bookings th,
+.admin-bookings td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ccc;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+.admin-bookings th {
+    background-color: #2d3e50;
+    color: white;
+}
+
+.badge {
+    font-size: 13px;
+    padding: 6px 10px;
+    border-radius: 8px;
+    text-transform: capitalize;
+}
+
+.admin-bookings .btn-sm {
+    font-size: 12px;
+    padding: 6px 10px;
+    margin-bottom: 4px;
+}
+
+.reschedule-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.alert {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* MOBILE FIXES */
+@media (max-width: 768px) {
+    .admin-bookings h2 {
+        font-size: 18px;
+    }
+
+    .booking-filters {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 0 10px;
+    }
+
+    .admin-bookings table {
+        min-width: 100%;
+        font-size: 13px;
+    }
+
+    .reschedule-inputs {
+        flex-direction: column;
+    }
+
+    .admin-bookings .btn-sm {
+        font-size: 11px;
+    }
+}

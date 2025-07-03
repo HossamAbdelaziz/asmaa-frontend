@@ -1,0 +1,255 @@
+/* ================================================
+🔔 Notification Bell – Full Professional Styling
+================================================= */
+
+/* Bell container */
+.notification-bell-container {
+    position: relative;
+    display: inline-block;
+}
+
+/* Bell icon with badge */
+.bell-icon {
+    font-size: 24px;
+    cursor: pointer;
+    position: relative;
+}
+
+.bell-icon .badge {
+    position: absolute;
+    top: -6px;
+    right: -8px;
+    background: red;
+    color: white;
+    font-size: 0.7rem;
+    font-weight: bold;
+    border-radius: 50%;
+    padding: 2px 6px;
+    line-height: 1;
+}
+
+/* ======================
+📩 Dropdown Panel
+====================== */
+.dropdown.notif-dropdown {
+  position: absolute;
+  top: calc(40px + env(safe-area-inset-top)); /* ✅ iOS notch-safe */
+  right: 0;
+  width: 350px;
+  max-width: 95vw;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  z-index: 9999;
+  overflow: hidden;
+  border: 1px solid #e0e0e0;
+}
+/* ✅ iOS override: adds notch-safe spacing */
+body.capacitor-ios .dropdown.notif-dropdown {
+  top: calc(40px + env(safe-area-inset-top));
+}
+.dropdown-header {
+    font-weight: 600;
+    font-size: 1.1rem;
+    padding: 12px 16px;
+    border-bottom: 1px solid #eee;
+    background: #f9f9f9;
+}
+
+/* ======================
+📜 Notification List
+====================== */
+.notif-scroll {
+    padding: 12px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Individual Notification Card */
+.dropdown-item {
+    display: flex;
+    gap: 12px;
+    border-radius: 8px;
+    background: #fff;
+    padding: 10px 12px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    align-items: flex-start;
+    border: 1px solid #f0f0f0;
+}
+
+.dropdown-item:hover {
+    background: #f3f6ff;
+}
+
+/* Unread highlight */
+.dropdown-item.unread {
+    border-left: 4px solid #1877f2;
+    background-color: #f0f8ff;
+}
+
+.notif-thumbnail {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 6px;
+    flex-shrink: 0;
+}
+
+.notif-content {
+    flex: 1;
+}
+
+.notif-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.notif-title {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: #333;
+}
+
+.unread-dot {
+    width: 8px;
+    height: 8px;
+    background: #1877f2;
+    border-radius: 50%;
+    margin-left: 6px;
+}
+
+.notif-snippet {
+    font-size: 0.88rem;
+    color: #555;
+    margin-top: 4px;
+}
+
+.notif-time {
+    font-size: 0.75rem;
+    color: #999;
+    margin-top: 4px;
+}
+
+/* ======================
+📎 Read More Button
+====================== */
+.notif-expand-btn {
+    margin-top: 6px;
+    background: none;
+    border: none;
+    color: #1877f2;
+    font-size: 0.85rem;
+    cursor: pointer;
+    padding: 4px 6px;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
+
+.notif-expand-btn:hover {
+    background-color: rgba(24, 119, 242, 0.1);
+}
+
+/* ======================
+📁 See All Button
+====================== */
+.see-all-btn-wrapper {
+    padding: 12px;
+    border-top: 1px solid #eee;
+    text-align: center;
+    background: #fff;
+}
+
+.see-all-btn {
+    background-color: transparent;
+    border: none;
+    color: #1877f2;
+    font-weight: 500;
+    font-size: 0.95rem;
+    cursor: pointer;
+    padding: 6px 12px;
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+}
+
+.see-all-btn:hover {
+    background-color: rgba(24, 119, 242, 0.08);
+}
+
+/* ======================
+📱 Mobile Optimizations
+====================== */
+@media (max-width: 480px) {
+    .dropdown.notif-dropdown {
+        width: 92vw;
+        right: 8px;
+        left: auto;
+    }
+
+    .notif-title {
+        font-size: 1rem;
+    }
+
+    .notif-snippet {
+        font-size: 0.9rem;
+    }
+
+    .notif-time {
+        font-size: 0.75rem;
+    }
+
+    .notif-expand-btn,
+    .see-all-btn {
+        font-size: 0.9rem;
+    }
+
+    .dropdown-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .notif-thumbnail {
+        width: 100%;
+        height: auto;
+    }
+
+    .notif-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+    }
+}
+
+
+.notif-snippet {
+    font-size: 0.9rem;
+    color: #555;
+    margin-top: 4px;
+
+    /* Prevent overflow */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    /* Ensure clean wrap on small screens */
+    word-break: break-word;
+    max-width: 220px;
+    /* or 100% if you’re in a flexbox */
+}
+
+/* 🧠 Overlay to prevent clipping and respect iOS safe area */
+.dropdown-overlay {
+  position: fixed;
+  top: calc(env(safe-area-inset-top, 0px) + 48px);
+  right: 8px;
+  z-index: 9999;
+  display: flex;
+  justify-content: flex-end;
+  pointer-events: none;
+}
+
+.dropdown.notif-dropdown {
+  pointer-events: all;
+}

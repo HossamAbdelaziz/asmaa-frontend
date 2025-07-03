@@ -1,0 +1,131 @@
+.admin-users-report {
+    padding: 20px;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.admin-users-report h2 {
+    font-size: 22px;
+    color: #1b4332;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.user-filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+    justify-content: center;
+}
+
+.user-filter-bar input,
+.user-filter-bar select,
+.user-filter-bar button {
+    font-size: 14px;
+    padding: 8px 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+.user-filter-bar input,
+.user-filter-bar select {
+    max-width: 240px;
+    flex: 1;
+}
+
+.user-filter-bar button {
+    background-color: white;
+    cursor: pointer;
+    border: 1px solid #888;
+}
+
+.user-filter-bar button:hover {
+    background-color: #f3f3f3;
+}
+
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.admin-users-report table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px;
+    font-size: 14px;
+}
+
+.admin-users-report th,
+.admin-users-report td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ccc;
+    word-break: break-word;
+}
+
+.admin-users-report th {
+    background-color: #2d3e50;
+    color: white;
+}
+
+.admin-users-report .table-light th {
+    background-color: #f1f1f1;
+    color: #333;
+}
+
+/* Token Subtable Styling */
+.token-table {
+    width: 100%;
+    min-width: 500px;
+    font-size: 13px;
+    margin-top: 10px;
+}
+
+.token-table th,
+.token-table td {
+    padding: 6px 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+/* Soft highlight for token row */
+.token-table-wrapper {
+    overflow-x: auto;
+    margin-top: 10px;
+}
+
+/* Muted/italic helpers */
+.text-muted {
+    color: #999;
+}
+
+.fst-italic {
+    font-style: italic;
+}
+
+/* Mobile tweaks */
+@media (max-width: 768px) {
+    .admin-users-report h2 {
+        font-size: 18px;
+    }
+
+    .user-filter-bar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .user-filter-bar input,
+    .user-filter-bar select,
+    .user-filter-bar button {
+        width: 100%;
+    }
+
+    .admin-users-report table {
+        font-size: 13px;
+        min-width: 100%;
+    }
+
+    .token-table {
+        min-width: 100%;
+    }
+}

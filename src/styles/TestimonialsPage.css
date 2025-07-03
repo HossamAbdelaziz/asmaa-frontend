@@ -1,0 +1,37 @@
+/* src/styles/TestimonialsPage.css */
+
+.testimonials-page {
+    background-color: #fdfdfc;
+    padding: 60px 20px;
+    text-align: center;
+    font-family: "Poppins", sans-serif;
+}
+
+.testimonials-hero {
+    max-width: 900px;
+    margin: 0 auto 40px;
+    padding: 0 16px;
+}
+
+.testimonials-hero h1 {
+    font-size: 2.6rem;
+    font-weight: 600;
+    color: #1b4332;
+    margin-bottom: 12px;
+}
+
+.testimonials-hero p {
+    font-size: 1.1rem;
+    color: #444;
+    line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+    .testimonials-hero h1 {
+        font-size: 2rem;
+    }
+
+    .testimonials-hero p {
+        font-size: 1rem;
+    }
+}

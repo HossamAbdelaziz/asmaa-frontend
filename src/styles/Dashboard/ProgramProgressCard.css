@@ -1,0 +1,207 @@
+/* ==========================================
+   ✨ Coach Asmaa - Program Progress Card
+========================================== */
+
+.program-progress-card {
+    background: #fff;
+    border: 2px solid #1b4332;
+    border-radius: 16px;
+    padding: 32px 24px;
+    box-shadow: 0 8px 24px rgba(0, 64, 0, 0.05);
+    font-family: "Segoe UI", sans-serif;
+    color: #1b1b1b;
+    animation: fadeIn 0.4s ease;
+}
+
+.program-progress-card:hover {
+    box-shadow: 0 0 12px rgba(27, 67, 50, 0.12);
+    transform: translateY(-2px);
+    transition: 0.3s ease;
+}
+
+/* Optional: Slight background tint for warmth */
+body {
+    background-color: #fdfdfb;
+    /* soft beige tint */
+}
+
+/* Two-column layout */
+.card-columns {
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+/* Left: Avatar + Info */
+.card-left {
+    flex: 1;
+    min-width: 280px;
+}
+
+/* Right: Weeks + Stats */
+.card-right {
+    flex: 1.1;
+    min-width: 280px;
+}
+
+/* Header Avatar & Welcome */
+.avatar-heading-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 16px;
+}
+
+.progress-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #1b4332;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.progress-heading {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin: 0;
+    color: #1b4332;
+}
+
+/* Program Info */
+.program-meta {
+    font-size: 1rem;
+    line-height: 1.7;
+    padding-left: 4px;
+}
+
+.program-meta p {
+    margin: 4px 0;
+}
+
+.program-meta strong {
+    font-weight: 600;
+    color: #333;
+    min-width: 120px;
+    display: inline-block;
+}
+
+/* Week Progress Section */
+.progress-block {
+    margin-top: 4px;
+}
+
+.progress-label {
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 6px;
+    display: inline-block;
+    color: #333;
+}
+
+.week-progress-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 4px;
+}
+
+.week-badge {
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    border: 1px solid #ccc;
+    background-color: #f5f5f5;
+    transition: all 0.3s ease;
+}
+
+.week-badge.done {
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    color: #1b4332;
+}
+
+.week-badge.current {
+    background-color: #ffe8a1;
+    border-color: #ffd35a;
+    color: #000;
+}
+
+.week-badge.future {
+    background-color: #f0f0f0;
+    border-color: #ddd;
+    color: #aaa;
+}
+
+/* Summary Section */
+.program-summary {
+    margin-top: 20px;
+    font-size: 1rem;
+    font-weight: 500;
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    padding: 16px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.program-summary p {
+    margin: 0;
+    color: #1b4332;
+}
+
+.program-summary strong {
+    color: #000;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .card-columns {
+        flex-direction: column;
+        gap: 24px;
+    }
+
+    .avatar-heading-wrapper {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .progress-avatar {
+        width: 90px;
+        height: 90px;
+    }
+
+    .progress-heading {
+        font-size: 1.5rem;
+        margin-top: 8px;
+    }
+
+    .program-meta strong {
+        min-width: unset;
+    }
+
+    .week-progress-wrapper {
+        justify-content: center;
+    }
+
+    .program-summary {
+        text-align: center;
+    }
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

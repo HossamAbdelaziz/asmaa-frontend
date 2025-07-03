@@ -1,0 +1,41 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Node & build artifacts
+node_modules/
+dist/
+dist-ssr/
+*.local
+
+# Capacitor mobile platform folders (regenerate as needed)
+android/
+ios/
+firebase-ios-sdk/
+ios_backup/
+
+# Editor directories and files
+.vscode/
+!.vscode/extensions.json
+.idea/
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.env
+
+# Firebase and secrets
+backend/
+service-account.json
+**/google-services.json
+**/service-account.json
+
+# OS junk
+Thumbs.db

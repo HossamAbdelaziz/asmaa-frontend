@@ -1,0 +1,256 @@
+/* ===================================
+   🌍 Global CSS Variables (Theme)
+=================================== */
+:root {
+  --bg-page: #FAF9F8;
+  --bg-surface: #E5D5BF;
+  --text-primary: #402F1F;
+  --text-subtle: #948973;
+  --accent: #C19C5D;
+  --bg-header-footer: #F1EEED;
+
+  --font-body: 'Poppins', sans-serif;
+  --font-heading: 'Playfair Display', serif;
+  --font-arabic-body: 'Cairo', sans-serif;
+  --font-arabic-heading: 'Markazi Text', serif;
+}
+
+
+/* ===================================
+   🔘 Global Button Styles
+=================================== */
+.button {
+  background-color: var(--accent);
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  font-family: var(--font-body);
+  text-decoration: none;
+  display: inline-block;
+}
+
+.button:hover {
+  background-color: #caa547;
+  transform: scale(1.02);
+}
+
+.button:disabled {
+  background-color: #dcdcdc;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+
+/* ===================================
+   📄 Base Body Styles
+=================================== */
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: var(--font-body);
+  background-color: var(--bg-page);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+html {
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+
+/* ===================================
+   🧠 Code Block Font
+=================================== */
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+
+/* ===================================
+   🌐 Language Layout Support
+=================================== */
+
+/* Arabic Layout */
+body.lang-ar {
+  font-family: var(--font-arabic-body);
+}
+
+body.lang-ar h1,
+body.lang-ar h2,
+body.lang-ar h3,
+body.lang-ar h4 {
+  font-family: var(--font-arabic-heading);
+  font-weight: 600;
+}
+
+/* English Layout */
+body.lang-en {
+  font-family: var(--font-body);
+}
+
+body.lang-en h1,
+body.lang-en h2,
+body.lang-en h3,
+body.lang-en h4 {
+  font-family: var(--font-heading);
+}
+
+
+/* Flip Only Arabic Content to RTL */
+body.lang-ar p,
+body.lang-ar h1,
+body.lang-ar h2,
+body.lang-ar h3,
+body.lang-ar h4,
+body.lang-ar h5,
+body.lang-ar h6,
+body.lang-ar li,
+body.lang-ar span,
+body.lang-ar blockquote,
+body.lang-ar label {
+  direction: rtl !important;
+  text-align: right !important;
+  word-spacing: 0.05em;
+  line-height: 1.8;
+}
+
+body.lang-en p,
+body.lang-en h1,
+body.lang-en h2,
+body.lang-en h3,
+body.lang-en h4,
+body.lang-en h5,
+body.lang-en h6,
+body.lang-en li,
+body.lang-en span,
+body.lang-en blockquote,
+body.lang-en label {
+  direction: ltr !important;
+  text-align: left !important;
+}
+
+
+/* Arabic Section Overrides */
+body.lang-ar .content-wrapper,
+body.lang-ar .section,
+body.lang-ar .hero-section,
+body.lang-ar .home-hero-text,
+body.lang-ar .about-coach-section {
+  direction: rtl;
+  text-align: right;
+}
+
+
+/* ===================================
+   🟢 Utility Fixes
+=================================== */
+ul {
+  padding-right: 20px;
+  list-style-position: inside;
+}
+
+
+/* ===================================
+   📦 Layout Container Behavior
+=================================== */
+html,
+#root {
+  height: 100%;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.page-content {
+  flex: 1;
+}
+
+
+/* Layout Wrapper */
+.layout-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.layout-main {
+  flex: 1;
+  padding-bottom: 40px;
+}
+
+
+/* ===================================
+   📅 Calendar Styles (react-big-calendar)
+=================================== */
+.calendar-wrapper .rbc-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.calendar-wrapper .rbc-btn-group button {
+  all: initial;
+  padding: 6px 12px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  background: #fff;
+  cursor: pointer;
+  font-family: inherit;
+  border-radius: 4px;
+}
+
+.calendar-wrapper .rbc-btn-group button:hover {
+  background-color: #f0f0f0;
+}
+
+.calendar-wrapper .rbc-btn-group button.rbc-active,
+.calendar-wrapper .rbc-btn-group button:focus {
+  background-color: var(--accent, #C19C5D);
+  color: white;
+  border-color: var(--accent, #C19C5D);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+  /* ✅ This prevents horizontal scroll globally */
+}
+
+
+/* iOS Safe Area Top Padding Fix */
+body.capacitor-ios .ios-safe-area-fix {
+  height: env(safe-area-inset-top);
+  background-color: #fdfaf7; /* match your navbar background */
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+/* Push the entire app down by the safe area height */
+body.capacitor-ios #root {
+  padding-top: env(safe-area-inset-top);
+}
